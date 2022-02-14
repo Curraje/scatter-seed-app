@@ -1,13 +1,16 @@
 {
   "name": "scatter-seed-app",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "postlint": "prettier --write .",
+    "lint": "cross-env eslint --ext .tsx --ext .ts .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "expo": "~44.0.0",
@@ -21,7 +24,24 @@
     "@babel/core": "^7.12.9",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.9.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.4",
+    "prettier": "^2.5.1",
     "typescript": "~4.3.5"
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,tsx}": [
+      "eslint --ext .tsx --ext .ts . --fix"
+    ],
+    "./src/**": [
+      "prettier --write ."
+    ]
   },
   "private": true
 }
