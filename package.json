@@ -11,7 +11,7 @@
     "postlint": "prettier --write .",
     "lint": "cross-env eslint --ext .tsx --ext .ts .",
     "prepare": "husky install",
-    "test":"jest"
+    "test": "jest"
   },
   "dependencies": {
     "expo": "~44.0.0",

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Button, Linking, StyleSheet, Text, View } from "react-native";
-import { useLogging } from "./hooks/useLogging";
 import Header from "./components/header/header";
 
 export default class App extends React.Component {
@@ -10,11 +9,16 @@ export default class App extends React.Component {
     return (
       <View style={container}>
         <View style={header}>
-          <Header title="Awesomest App Ever!!!"  />
+          <Header title="Awesomest App Ever!!!" />
         </View>
         <View style={content}>
           <Text style={styles.text}>Actually making progress!!</Text>
-          <Button title="github repo" onPress={()=>{ Linking.openURL("https://github.com/Curraje/scatter-seed-app/tree/nick-playground");}}></Button>
+          <Button
+            title="github repo"
+            onPress={() => {
+              Linking.openURL("https://github.com/Curraje/scatter-seed-app/tree/nick-playground");
+            }}
+          ></Button>
         </View>
       </View>
     );
@@ -30,14 +34,14 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#0000ff",
-    fontSize: 20
+    fontSize: 20,
   },
   header: {
-    flex: 1
+    flex: 1,
   },
   content: {
     flex: 6,
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
