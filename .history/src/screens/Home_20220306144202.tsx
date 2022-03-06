@@ -38,9 +38,9 @@ export default function Home({ navigation, route }: any) {
     } else {
       try {
         const user = {
-          Name: name,
-        };
-        await AsyncStorage.setItem("UserData", JSON.stringify(user));  
+          
+        }
+        await AsyncStorage.setItem("UserName", name);  
         Alert.alert("Success!", "Your name has been updated.");
       } catch (error) {
         console.log(error);
@@ -50,7 +50,7 @@ export default function Home({ navigation, route }: any) {
 
   const removeData = async () => {
     try {
-      await AsyncStorage.removeItem("UserData");  
+      await AsyncStorage.removeItem("UserName");  
       navigation.navigate("Login");
     } catch (error) {
       console.log(error);

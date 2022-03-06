@@ -39,8 +39,9 @@ export default function Home({ navigation, route }: any) {
       try {
         const user = {
           Name: name,
+          Age: age,
         };
-        await AsyncStorage.setItem("UserData", JSON.stringify(user));  
+        await AsyncStorage.mergeItem("UserData", JSON.stringify(user));  
         Alert.alert("Success!", "Your name has been updated.");
       } catch (error) {
         console.log(error);

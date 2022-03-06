@@ -9,7 +9,6 @@ import GlobalStyles from "../utils/GlobalStyles";
 export default function Login({ navigation }: any) {
     const [name, setName]=useState("");
     const [age, setAge]=useState("");
-
     useEffect(() => {
         getData();
       }, []);
@@ -33,7 +32,7 @@ export default function Login({ navigation }: any) {
         Alert.alert("Warning!", "Please enter appropriate data");  
       } else {
           try {
-              const user = {
+              let user = {
                 Name: name,
                 Age: age,
               };

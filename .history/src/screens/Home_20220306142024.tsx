@@ -10,7 +10,6 @@ import GlobalStyles from "../utils/GlobalStyles";
 export default function Home({ navigation, route }: any) {
 
   const [name, setName] = useState("");
-  const [age, setAge]=useState("");
 
   useEffect(() => {
     getData();
@@ -18,12 +17,10 @@ export default function Home({ navigation, route }: any) {
 
   const getData = () => {
     try {
-      AsyncStorage.getItem("UserData")
+      AsyncStorage.getItem("UserName")
         .then(value => {
           if (value != null) {
-            const user = JSON.parse(value);
-            setName(user.Name);
-            setAge(user.Age);
+            setName(value);
           }
         }
         );
@@ -33,14 +30,11 @@ export default function Home({ navigation, route }: any) {
   };
 
   const updateData = async () => {
-    if (name.length == 0) {
+    if (name.length < 1) {
       Alert.alert("Warning!", "Please enter a username");  
     } else {
       try {
-        const user = {
-          Name: name,
-        };
-        await AsyncStorage.setItem("UserData", JSON.stringify(user));  
+        await AsyncStorage.setItem("UserName", name);  
         Alert.alert("Success!", "Your name has been updated.");
       } catch (error) {
         console.log(error);
@@ -48,36 +42,20 @@ export default function Home({ navigation, route }: any) {
     }
   };
 
-  const removeData = async () => {
-    try {
-      await AsyncStorage.removeItem("UserData");  
-      navigation.navigate("Login");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <View style={[GlobalStyles.body]}>
       <Text style={[GlobalStyles.text]}>ScatterSeed - Home</Text>
-      <Text style={[GlobalStyles.text]}>Welcome {name} ! Are you really {age} year(s) old??</Text>
+      <Text style={[GlobalStyles.text]}>Welcome {name} !</Text>
       <TextInput 
-        style={styles.updateInput}
-        placeholder="Update Username"
-        value={name}
+        style={styles.loginInput}
+        placeholder="Username"
         onChangeText={(value) => setName(value)}
       />
       <CustomButton
-        title="Update"
-        regular_color="#00b099"
-        pressed_color="#1eb000"
-        onPressFunction={updateData}
-      />
-      <CustomButton
-        title="Delete"
-        regular_color="#cc0000"
-        pressed_color="#ffb3b3"
-        onPressFunction={removeData}
+        title="Login"
+        regular_color="#1eb900"
+        pressed_color="#1eb999"
+        onPressFunction={setData}
       />
     </View>
   );
@@ -90,14 +68,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#0080ff",
   },
   updateImage: {
-    width:100,
-    height: 100,
-    margin: 20,
-    resizeMode: "contain"
+      width:100,
+      height: 100,
+      margin: 20,
+      resizeMode: "contain"
   },
   updateText: {
-    fontSize: 35,
-    fontWeight: "bold",
+      fontSize: 35,
+      fontWeight: "bold",
   },
   updateInput: {
     width: 300,

@@ -8,7 +8,6 @@ import GlobalStyles from "../utils/GlobalStyles";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Login({ navigation }: any) {
     const [name, setName]=useState("");
-    const [age, setAge]=useState("");
 
     useEffect(() => {
         getData();
@@ -16,7 +15,7 @@ export default function Login({ navigation }: any) {
     
       const getData = () => {
         try {
-          AsyncStorage.getItem("UserData")
+          AsyncStorage.getItem("UserName")
             .then(value => {
               if (value != null) {
                 navigation.navigate("Home");  
@@ -29,15 +28,11 @@ export default function Login({ navigation }: any) {
       };
 
     const setData = async () => {
-      if (name.length == 0 || age.length == 0) {
-        Alert.alert("Warning!", "Please enter appropriate data");  
+      if (name.length < 1) {
+        Alert.alert("Warning!", "Please enter a username");  
       } else {
           try {
-              const user = {
-                Name: name,
-                Age: age,
-              };
-            await AsyncStorage.setItem("UserData", JSON.stringify(user));  
+            await AsyncStorage.setItem("UserName", name);  
             navigation.navigate("Home");
           } catch (error) {
             console.log(error);
@@ -58,11 +53,6 @@ export default function Login({ navigation }: any) {
         style={styles.loginInput}
         placeholder="Username"
         onChangeText={(value) => setName(value)}
-      />
-      <TextInput 
-        style={styles.loginInput}
-        placeholder="Enter your Age"
-        onChangeText={(value) => setAge(value)}
       />
       <CustomButton
         title="Login"
@@ -98,6 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     textAlign: "center",
     fontSize: 20,
+    marginTop: 130,
     marginBottom: 10,
   },
 });

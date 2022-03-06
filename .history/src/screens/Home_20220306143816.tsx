@@ -21,9 +21,8 @@ export default function Home({ navigation, route }: any) {
       AsyncStorage.getItem("UserData")
         .then(value => {
           if (value != null) {
-            const user = JSON.parse(value);
-            setName(user.Name);
-            setAge(user.Age);
+            let user = JSON.parse(value);
+            setName(user.name);
           }
         }
         );
@@ -33,14 +32,11 @@ export default function Home({ navigation, route }: any) {
   };
 
   const updateData = async () => {
-    if (name.length == 0) {
+    if (name.length < 1) {
       Alert.alert("Warning!", "Please enter a username");  
     } else {
       try {
-        const user = {
-          Name: name,
-        };
-        await AsyncStorage.setItem("UserData", JSON.stringify(user));  
+        await AsyncStorage.setItem("UserName", name);  
         Alert.alert("Success!", "Your name has been updated.");
       } catch (error) {
         console.log(error);
@@ -50,7 +46,7 @@ export default function Home({ navigation, route }: any) {
 
   const removeData = async () => {
     try {
-      await AsyncStorage.removeItem("UserData");  
+      await AsyncStorage.removeItem("UserName");  
       navigation.navigate("Login");
     } catch (error) {
       console.log(error);
@@ -60,7 +56,7 @@ export default function Home({ navigation, route }: any) {
   return (
     <View style={[GlobalStyles.body]}>
       <Text style={[GlobalStyles.text]}>ScatterSeed - Home</Text>
-      <Text style={[GlobalStyles.text]}>Welcome {name} ! Are you really {age} year(s) old??</Text>
+      <Text style={[GlobalStyles.text]}>Welcome {name} !</Text>
       <TextInput 
         style={styles.updateInput}
         placeholder="Update Username"

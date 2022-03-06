@@ -33,7 +33,8 @@ export default function Login({ navigation }: any) {
         Alert.alert("Warning!", "Please enter appropriate data");  
       } else {
           try {
-              const user = {
+              // eslint-disable-next-line prefer-const
+              let user = {
                 Name: name,
                 Age: age,
               };

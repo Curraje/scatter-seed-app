@@ -8,15 +8,14 @@ import GlobalStyles from "../utils/GlobalStyles";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Login({ navigation }: any) {
     const [name, setName]=useState("");
-    const [age, setAge]=useState("");
-
+    const [age, setAge]=useState();
     useEffect(() => {
         getData();
       }, []);
     
       const getData = () => {
         try {
-          AsyncStorage.getItem("UserData")
+          AsyncStorage.getItem("UserName")
             .then(value => {
               if (value != null) {
                 navigation.navigate("Home");  
@@ -29,15 +28,11 @@ export default function Login({ navigation }: any) {
       };
 
     const setData = async () => {
-      if (name.length == 0 || age.length == 0) {
-        Alert.alert("Warning!", "Please enter appropriate data");  
+      if (name.length < 1) {
+        Alert.alert("Warning!", "Please enter a username");  
       } else {
           try {
-              const user = {
-                Name: name,
-                Age: age,
-              };
-            await AsyncStorage.setItem("UserData", JSON.stringify(user));  
+            await AsyncStorage.setItem("UserName", name);  
             navigation.navigate("Home");
           } catch (error) {
             console.log(error);
@@ -59,10 +54,16 @@ export default function Login({ navigation }: any) {
         placeholder="Username"
         onChangeText={(value) => setName(value)}
       />
+      <CustomButton
+        title="Login"
+        regular_color="#1eb900"
+        pressed_color="#1eb999"
+        onPressFunction={setData}
+      />
       <TextInput 
         style={styles.loginInput}
         placeholder="Enter your Age"
-        onChangeText={(value) => setAge(value)}
+        onChangeText={(value) => setName(value)}
       />
       <CustomButton
         title="Login"
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     textAlign: "center",
     fontSize: 20,
+    marginTop: 130,
     marginBottom: 10,
   },
 });

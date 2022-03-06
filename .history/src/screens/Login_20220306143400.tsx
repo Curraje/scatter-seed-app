@@ -9,14 +9,13 @@ import GlobalStyles from "../utils/GlobalStyles";
 export default function Login({ navigation }: any) {
     const [name, setName]=useState("");
     const [age, setAge]=useState("");
-
     useEffect(() => {
         getData();
       }, []);
     
       const getData = () => {
         try {
-          AsyncStorage.getItem("UserData")
+          AsyncStorage.getItem("UserName")
             .then(value => {
               if (value != null) {
                 navigation.navigate("Home");  
@@ -29,15 +28,11 @@ export default function Login({ navigation }: any) {
       };
 
     const setData = async () => {
-      if (name.length == 0 || age.length == 0) {
+      if (name.length < 1) {
         Alert.alert("Warning!", "Please enter appropriate data");  
       } else {
           try {
-              const user = {
-                Name: name,
-                Age: age,
-              };
-            await AsyncStorage.setItem("UserData", JSON.stringify(user));  
+            await AsyncStorage.setItem("UserName", name);  
             navigation.navigate("Home");
           } catch (error) {
             console.log(error);
@@ -98,6 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     textAlign: "center",
     fontSize: 20,
+    marginTop: 130,
     marginBottom: 10,
   },
 });
