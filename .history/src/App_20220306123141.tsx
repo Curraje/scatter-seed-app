@@ -39,7 +39,6 @@ export default function App() {
           component={Login} 
           options={{
             title: "Login Screen",
-            headerShown: false,
           }}
           initialParams={{ItemName:"Item from Drawer", ItemId: 1}}
         />

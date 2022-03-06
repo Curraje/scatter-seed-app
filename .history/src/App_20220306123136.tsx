@@ -9,6 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 //import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 //import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ScreenA from "./screens/Home";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Login from "./screens/Login";
 import Home from "./screens/Home";
@@ -39,7 +40,6 @@ export default function App() {
           component={Login} 
           options={{
             title: "Login Screen",
-            headerShown: false,
           }}
           initialParams={{ItemName:"Item from Drawer", ItemId: 1}}
         />

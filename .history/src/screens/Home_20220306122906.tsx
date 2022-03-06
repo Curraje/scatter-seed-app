@@ -3,28 +3,28 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CustomButton from "../utils/CustomButton";
 import GlobalStyles from "../utils/GlobalStyles";
+import Login from "./"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function ScreenB({ navigation, route }: any) {
-  const {ItemName, ItemId} = route.params;
+export default function Home({ navigation, route }: any) {
 
   const onPressHandler = () => {
-    navigation.navigate("Screen_A", {Message: "Message from Screen B"});
-    //navigation.setParams({ItemId: 24});
-    //Could also use: //navigation.goBack(); //I did not because it doesn't make sense unless theres only ever 1 screen to go back to
+    navigation.navigate("Screen_B");
+    //navigation.toggleDrawer();
   };
 
   return (
     <View style={[GlobalStyles.body]}>
-      <Text style={[GlobalStyles.text]}>Screen B</Text>
+      <Text style={[GlobalStyles.text]}>Screen A</Text>
       <CustomButton
         onPressFunction={onPressHandler}
-        title={"Screen_A"}
+        title={"Screen B"}
         pressed_color={"red"}
         regular_color={"pink"}
         style={{ margin: 10 }}
       ></CustomButton>
-      <Text style={[GlobalStyles.text]}>{ItemName} {ItemId}</Text>
+      <Text style={[GlobalStyles.text]}>{route.params?.Message}</Text>
     </View>
   );
 }
+

@@ -9,9 +9,9 @@ import { NavigationContainer } from "@react-navigation/native";
 //import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 //import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ScreenA from "./screens/Home";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Login from "./screens/Login";
-import Home from "./screens/Home";
+import Login from "./Login";
 
 // const Tab = createBottomTabNavigator();
 // const Tab = createMaterialBottomTabNavigator();
@@ -23,23 +23,45 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
-        screenOptions={{  }}
+        initialRouteName="Screen_A"
+        screenOptions={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerStyle:{
+            backgroundColor: "#0080ff",
+          }, 
+          headerTintColor: "#ffffff",
+          headerTitleStyle:{
+            fontSize: 25,
+            fontWeight: "bold",
+          }
+        }}
         
       >
         <Stack.Screen 
-          name="Home" 
-          component={Home}
+          name="Screen_A" 
+          component={ScreenA}
           options={{
-            title: "Home Screen",
+            title: "Screen A Title",
+            drawerIcon: ({focused}) => 
+              <FontAwesome5
+                name="autoprefixer"
+                size={focused ? 25 : 30} 
+                color={focused ? "#0080ff" : "#999999"}
+              />
           }}
         />
         <Stack.Screen 
-          name="Login" 
-          component={Login} 
+          name="Screen_B" 
+          component={ScreenB} 
           options={{
-            title: "Login Screen",
-            headerShown: false,
+            title: "Screen B Title",
+            drawerIcon: ({focused}) => 
+              <FontAwesome5
+                name="btc"
+                size={focused ? 25 : 30} 
+                color={focused ? "#0080ff" : "#999999"}
+              />
           }}
           initialParams={{ItemName:"Item from Drawer", ItemId: 1}}
         />
