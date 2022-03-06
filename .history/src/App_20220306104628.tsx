@@ -20,24 +20,24 @@ const Tab = materialTopTabs.createMaterialTopTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={
-        ({ route }: any) => ({
+      <Tab.Navigator
+        screenOptions={({ route }: any) => ({
           tabBarActiveTintColor: "#f3f",
           tabBarInactiveTintColor: "#555",
           tabBarActiveBackgroundColor: "#fff",
           tabBarInactiveBackgroundColor: "#999",
           tabBarShowLabel: true,
-          tabBarLabelStyle: {fontSize: 14,},
-          tabBarIcon: ({focused, /*size,*/ color}) => {
+          tabBarLabelStyle: { fontSize: 14 },
+          tabBarIcon: ({ focused, /*size,*/ color }) => {
             let iconName = "";
             if (route.name === "Screen_A") {
-              iconName="autoprefixer";
+              iconName = "autoprefixer";
               //size=focused ? 20 : 30;
-              color=focused ? "#f3f" : "#555";
+              color = focused ? "#f3f" : "#555";
             } else if (route.name === "Screen_B") {
-              iconName="btc";
+              iconName = "btc";
               //size=focused? 20 : 30;
-              color=focused ? "#f3f" : "#555";
+              color = focused ? "#f3f" : "#555";
             }
             return (
               <FontAwesome5
@@ -46,26 +46,21 @@ export default function App() {
                 color={color}
               />
             );
-          }
-        })
-      }
+          },
+        })}
       >
         <Tab.Screen
           name="Screen_A"
-          component={ ScreenA }
-          options={{
-            //tabBarBadge: 2,
-          }}
+          component={ScreenA}
+          options={
+            {
+              //tabBarBadge: 2,
+            }
+          }
         />
-        <Tab.Screen
-          name="Screen_B"
-          component={ ScreenB }
-        />
+        <Tab.Screen name="Screen_B" component={ScreenB} />
       </Tab.Navigator>
-      
     </NavigationContainer>
-    
-      
   );
 }
 
