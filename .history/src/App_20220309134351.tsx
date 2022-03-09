@@ -1,13 +1,30 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import 'react-native-gesture-handler';
+import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomePage from "./screens/Home";
-import TasksPage from "./screens/Tasks";
 
 const Stack = createStackNavigator();
+
+function HomePage() {
+  return(
+    <View style={styles.container}>
+      <Text>Welcome to the Home Page</Text>
+      <StatusBar style="auto" />
+    </View>
+
+  );
+}
+
+function TasksPage() {
+  return(
+    <View style={styles.container}>
+      <Text>Tasks!</Text>
+      <StatusBar style="auto" />
+    </View>
+
+  );
+}
 
 
 // Our App Root
@@ -20,8 +37,8 @@ export default function App() {
           component={ HomePage }
         />
         <Stack.Screen
-          name="Tasks"
-          component={ TasksPage }
+          name="Home"
+          component={ HomePage }
         />
         
       </Stack.Navigator>
@@ -35,11 +52,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  text: {
-    fontSize: 14,
-    alignItems: "center",
-    fontWeight: "bold",
   },
 });
 

@@ -5,9 +5,13 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomePage from "./screens/Home";
-import TasksPage from "./screens/Tasks";
+import HomePage from "./screens/Home";
 
 const Stack = createStackNavigator();
+
+
+
+
 
 
 // Our App Root
