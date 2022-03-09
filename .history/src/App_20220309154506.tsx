@@ -24,7 +24,7 @@ export default function App() {
             tabBarActiveBackgroundColor: "#35a4e3",
             tabBarInactiveBackgroundColor: "#62b8ea",
             tabBarShowLabel: true,
-            tabBarLabelStyle: {fontSize: 14, fontWeight: "bold",} /*{({focused}) => ({fontSize: pressed ? 20 : 14})}*/,
+            tabBarLabelStyle: {fontSize: 14,} /*{({focused}) => ({fontSize: pressed ? 20 : 14})}*/,
             tabBarIcon: ({focused, size, color}) => {
               let iconName = "";
               if (route.name === "Home") {

@@ -18,38 +18,38 @@ export default function App() {
       <Tab.Navigator
         screenOptions={
           ({ route }) => ({
-            tabBarActiveTintColor: "#000",
-            tabBarActiveTintWeight: "bold",
-            tabBarInactiveTintColor: "#595959",
+            tabBarActiveTintColor: "#ff8533",
+            tabBarInactiveTintColor: "#000",
             tabBarActiveBackgroundColor: "#35a4e3",
             tabBarInactiveBackgroundColor: "#62b8ea",
             tabBarShowLabel: true,
-            tabBarLabelStyle: {fontSize: 14, fontWeight: "bold",} /*{({focused}) => ({fontSize: pressed ? 20 : 14})}*/,
+            tabBarLabelStyle: {({focused})fontSize: 14, fontWeight: 1,},7
+            {({pressed}) => ({backgroundColor: pressed ? "#555" : "#ddd"})}
             tabBarIcon: ({focused, size, color}) => {
               let iconName = "";
               if (route.name === "Home") {
                 iconName="building";
                 size=focused ? 20 : 14;
-                color=focused ? "#000" : "#595959";
+                color=focused ? "#ff8533" : "#000";
               } else if (route.name === "Tasks") {
                 iconName="list-alt";
                 size=focused ? 20 : 14;
-                color=focused ? "#000" : "#595959";
+                color=focused ? "#ff8533" : "#000";
               }
               else if (route.name === "Garden") {
                 iconName="envira";
                 size=focused ? 20 : 14;
-                color=focused ? "#000" : "#595959";
+                color=focused ? "#ff8533" : "#000";
               }
               else if (route.name === "Calendar") {
                 iconName="calendar";
                 size=focused ? 20 : 14;
-                color=focused ? "#000" : "#595959";
+                color=focused ? "#ff8533" : "#000";
               }
               else if (route.name === "Settings") {
                 iconName="sun";
                 size=focused ? 20 : 14;
-                color=focused ? "#000" : "#595959";
+                color=focused ? "#ff8533" : "#000";
               }
               return (
                 <FontAwesome5

@@ -19,7 +19,7 @@ export default function App() {
         screenOptions={
           ({ route }) => ({
             tabBarActiveTintColor: "#000",
-            tabBarActiveTintWeight: "bold",
+            tabBarActive
             tabBarInactiveTintColor: "#595959",
             tabBarActiveBackgroundColor: "#35a4e3",
             tabBarInactiveBackgroundColor: "#62b8ea",

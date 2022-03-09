@@ -2,7 +2,6 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import "react-native-gesture-handler";
-import GlobalStyles from "../utils/GlobalStyles";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function TasksPage({navigation}: any) {
@@ -12,7 +11,7 @@ export default function TasksPage({navigation}: any) {
   };
   
   return(
-    <View style={GlobalStyles.body}>
+    <View style={style=GlobalStyles.body}>
       <Text>Tasks!</Text>
       <StatusBar style="auto" />
       <Pressable
