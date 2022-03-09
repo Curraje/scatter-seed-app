@@ -9,8 +9,7 @@ const Stack = createStackNavigator();
 function HomePage() {
   return(
     <View>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      
     </View>
 
   );
@@ -24,9 +23,10 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
-          component={ HomePage }
+          component={  }
         />
-        
+        <Text>Open up App.tsx to start working on your app!</Text>
+        <StatusBar style="auto" />
       </Stack.Navigator>
     </NavigationContainer>
   );

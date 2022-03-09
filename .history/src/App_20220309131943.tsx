@@ -6,16 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-function HomePage() {
-  return(
-    <View>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-
-  );
-}
-
+function
 
 // Our App Root
 export default function App() {
@@ -24,9 +15,10 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
-          component={ HomePage }
+          component={  }
         />
-        
+        <Text>Open up App.tsx to start working on your app!</Text>
+        <StatusBar style="auto" />
       </Stack.Navigator>
     </NavigationContainer>
   );
