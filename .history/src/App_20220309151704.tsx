@@ -34,7 +34,7 @@ export default function App() {
                 size=focused ? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               } else if (route.name === "Tasks") {
-                iconName="list-alt";
+                iconName="";
                 size=focused? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               }

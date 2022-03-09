@@ -34,7 +34,7 @@ export default function App() {
                 size=focused ? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               } else if (route.name === "Tasks") {
-                iconName="list-alt";
+                iconName="";
                 size=focused? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               }
@@ -44,12 +44,12 @@ export default function App() {
                 color=focused ? "#f3f" : "#555";
               }
               else if (route.name === "Calendar") {
-                iconName="calendar";
+                iconName="";
                 size=focused? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               }
               else if (route.name === "Settings") {
-                iconName="sun";
+                iconName="";
                 size=focused? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               }

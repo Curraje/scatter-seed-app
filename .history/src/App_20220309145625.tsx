@@ -4,11 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomePage from "./screens/Home";
 import TasksPage from "./screens/Tasks";
-import SettingsPage from "./screens/Settings";
-import GardenPage from "./screens/Garden";
-import CalendarPage from "./screens/Calendar";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 // const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,30 +23,15 @@ export default function App() {
             tabBarInactiveBackgroundColor: "#999",
             tabBarShowLabel: true,
             tabBarLabelStyle: {fontSize: 14,},
-            tabBarIcon: ({focused, size, color}) => {
+            tabBarIcon: ({focused, /*size,*/ color}) => {
               let iconName = "";
-              if (route.name === "Home") {
-                iconName="building";
-                size=focused ? 20 : 30;
+              if (route.name === "Screen_A") {
+                iconName="autoprefixer";
+                //size=focused ? 20 : 30;
                 color=focused ? "#f3f" : "#555";
-              } else if (route.name === "Tasks") {
-                iconName="list-alt";
-                size=focused? 20 : 30;
-                color=focused ? "#f3f" : "#555";
-              }
-              else if (route.name === "Garden") {
-                iconName="envira";
-                size=focused? 20 : 30;
-                color=focused ? "#f3f" : "#555";
-              }
-              else if (route.name === "Calendar") {
-                iconName="calendar";
-                size=focused? 20 : 30;
-                color=focused ? "#f3f" : "#555";
-              }
-              else if (route.name === "Settings") {
-                iconName="sun";
-                size=focused? 20 : 30;
+              } else if (route.name === "Screen_B") {
+                iconName="btc";
+                //size=focused? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               }
               return (
@@ -65,24 +46,12 @@ export default function App() {
         }
       >
         <Tab.Screen
-          name="Garden"
-          component={ GardenPage }
-        />
-        <Tab.Screen
-          name="Tasks"
-          component={ TasksPage }
-        />
-        <Tab.Screen
           name="Home"
           component={ HomePage }
         />
         <Tab.Screen
-          name="Calendar"
-          component={ CalendarPage }
-        />
-        <Tab.Screen
-          name="Settings"
-          component={ SettingsPage }
+          name="Tasks"
+          component={ TasksPage }
         />
         
       </Tab.Navigator>

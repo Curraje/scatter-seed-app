@@ -34,22 +34,22 @@ export default function App() {
                 size=focused ? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               } else if (route.name === "Tasks") {
-                iconName="list-alt";
+                iconName="rectangle-list";
                 size=focused? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               }
               else if (route.name === "Garden") {
-                iconName="envira";
+                iconName="rectangle-list";
                 size=focused? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               }
               else if (route.name === "Calendar") {
-                iconName="calendar";
+                iconName="rectangle-list";
                 size=focused? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               }
               else if (route.name === "Settings") {
-                iconName="sun";
+                iconName="rectangle-list";
                 size=focused? 20 : 30;
                 color=focused ? "#f3f" : "#555";
               }
@@ -64,10 +64,7 @@ export default function App() {
           })
         }
       >
-        <Tab.Screen
-          name="Garden"
-          component={ GardenPage }
-        />
+        
         <Tab.Screen
           name="Tasks"
           component={ TasksPage }
@@ -75,6 +72,10 @@ export default function App() {
         <Tab.Screen
           name="Home"
           component={ HomePage }
+        />
+        <Tab.Screen
+          name="Garden"
+          component={ GardenPage }
         />
         <Tab.Screen
           name="Calendar"
