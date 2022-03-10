@@ -1,12 +1,13 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Pressable, Text, View } from "react-native";
-import "react-native-gesture-handler";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./garden.styles";
+import { BottomTabPageProps } from "../../@types/navigation";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function GardenPage({ navigation }: any) {
+type GardenPageProps = BottomTabPageProps<"Garden">;
+
+export default function GardenPage({ navigation }: GardenPageProps) {
   const onPressHandler = () => {
     navigation.navigate("Home");
   };

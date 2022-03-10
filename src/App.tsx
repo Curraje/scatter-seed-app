@@ -5,10 +5,12 @@ import TasksPage from "./screens/Tasks";
 import SettingsPage from "./screens/Settings";
 import GardenPage from "./screens/Garden";
 import CalendarPage from "./screens/Calendar";
+// import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { BottomTabParamList } from "./@types/navigation";
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 // Our App Root
 export default function App() {
@@ -25,31 +27,33 @@ export default function App() {
           tabBarLabelStyle: {
             fontSize: 14,
             fontWeight: "bold",
-          } /*{({focused}) => ({fontSize: pressed ? 20 : 14})}*/,
-          tabBarIcon: ({ focused, size, color }) => {
-            let iconName = "";
-            if (route.name === "Home") {
-              iconName = "building";
-              size = focused ? 20 : 14;
-              color = focused ? "#000" : "#595959";
-            } else if (route.name === "Tasks") {
-              iconName = "list-alt";
-              size = focused ? 20 : 14;
-              color = focused ? "#000" : "#595959";
-            } else if (route.name === "Garden") {
-              iconName = "envira";
-              size = focused ? 20 : 14;
-              color = focused ? "#000" : "#595959";
-            } else if (route.name === "Calendar") {
-              iconName = "calendar";
-              size = focused ? 20 : 14;
-              color = focused ? "#000" : "#595959";
-            } else if (route.name === "Settings") {
-              iconName = "sun";
-              size = focused ? 20 : 14;
-              color = focused ? "#000" : "#595959";
+          },
+          tabBarIcon: ({ focused }) => {
+            let iconName = "building";
+            switch (route.name) {
+              case "Settings":
+                iconName = "sun";
+                break;
+              case "Tasks":
+                iconName = "list-alt";
+                break;
+              case "Garden":
+                iconName = "envira";
+                break;
+              case "Calendar":
+                iconName = "calendar";
+                break;
+              default:
+                iconName = "building";
             }
-            return <FontAwesome5 name={iconName} size={size} color={color} />;
+
+            return (
+              <FontAwesome5
+                name={iconName}
+                size={focused ? 20 : 14}
+                color={focused ? "#000" : "#595959"}
+              />
+            );
           },
         })}
       >

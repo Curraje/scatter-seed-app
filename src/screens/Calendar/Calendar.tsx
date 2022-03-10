@@ -4,9 +4,11 @@ import { Pressable, Text, View } from "react-native";
 import "react-native-gesture-handler";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./calendar.styles";
+import { BottomTabPageProps } from "../../@types/navigation";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function CalendarPage({ navigation }: any) {
+type CalendarPageProps = BottomTabPageProps<"Calendar">;
+
+export default function CalendarPage({ navigation }: CalendarPageProps) {
   const onPressHandler = () => {
     navigation.navigate("Home");
   };

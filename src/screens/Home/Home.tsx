@@ -1,11 +1,13 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Pressable, Text, View } from "react-native";
-import "react-native-gesture-handler";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./home.styles";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function HomePage({ navigation }: any) {
+import { BottomTabPageProps } from "../../@types/navigation";
+
+type HomePageProps = BottomTabPageProps<"Home">;
+
+export default function HomePage({ navigation }: HomePageProps) {
   const onPressHandler = () => {
     navigation.navigate("Tasks");
   };
