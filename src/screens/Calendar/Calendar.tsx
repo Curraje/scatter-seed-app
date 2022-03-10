@@ -1,12 +1,10 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Pressable, Text, View } from "react-native";
-import "react-native-gesture-handler";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./calendar.styles";
-import { BottomTabPageProps } from "../../@types/navigation";
 
-type CalendarPageProps = BottomTabPageProps<"Calendar">;
+type CalendarPageProps = Navigation.AppTabsPageProps<"Calendar">;
 
 export default function CalendarPage({ navigation }: CalendarPageProps) {
   const onPressHandler = () => {

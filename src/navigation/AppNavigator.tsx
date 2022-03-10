@@ -6,10 +6,9 @@ import GardenPage from "../screens/Garden";
 import CalendarPage from "../screens/Calendar";
 // import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { BottomTabParamList } from "../@types/navigation";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
-const Tab = createBottomTabNavigator<BottomTabParamList>();
+const Tab = createBottomTabNavigator<Navigation.AppTabsParamList>();
 
 export default function AppNavigator() {
   return (

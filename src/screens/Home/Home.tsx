@@ -3,9 +3,8 @@ import { StatusBar } from "expo-status-bar";
 import { Pressable, Text, View } from "react-native";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./home.styles";
-import { BottomTabPageProps } from "../../@types/navigation";
 
-type HomePageProps = BottomTabPageProps<"Home">;
+type HomePageProps = Navigation.AppTabsPageProps<"Home">;
 
 export default function HomePage({ navigation }: HomePageProps) {
   const onPressHandler = () => {

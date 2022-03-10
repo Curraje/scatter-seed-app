@@ -1,12 +1,12 @@
-// import { MaterialBottomTabScreenProps } from "@react-navigation/material-bottom-tabs";
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+declare namespace Navigation {
+  export declare type AppTabsParamList = {
+    Home: undefined;
+    Tasks: undefined;
+    Calendar: undefined;
+    Garden: undefined;
+    Settings: undefined;
+  };
 
-export type BottomTabParamList = {
-  Home: undefined;
-  Tasks: undefined;
-  Calendar: undefined;
-  Garden: undefined;
-  Settings: undefined;
-};
-
-export type BottomTabPageProps<t> = BottomTabScreenProps<BottomTabParamList, t>;
+  export declare type AppTabsPageProps<T extends keyof AppTabsParamList> =
+    import("@react-navigation/bottom-tabs").BottomTabScreenProps<AppTabsParamList, T>;
+}

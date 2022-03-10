@@ -3,9 +3,8 @@ import { StatusBar } from "expo-status-bar";
 import { Pressable, Text, View } from "react-native";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./tasks.styles";
-import { BottomTabPageProps } from "../../@types/navigation";
 
-type TasksPageProps = BottomTabPageProps<"Tasks">;
+type TasksPageProps = Navigation.AppTabsPageProps<"Tasks">;
 
 export default function TasksPage({ navigation }: TasksPageProps) {
   const onPressHandler = () => {

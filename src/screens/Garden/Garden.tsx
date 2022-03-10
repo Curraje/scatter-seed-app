@@ -3,9 +3,8 @@ import { StatusBar } from "expo-status-bar";
 import { Pressable, Text, View } from "react-native";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./garden.styles";
-import { BottomTabPageProps } from "../../@types/navigation";
 
-type GardenPageProps = BottomTabPageProps<"Garden">;
+type GardenPageProps = Navigation.AppTabsPageProps<"Garden">;
 
 export default function GardenPage({ navigation }: GardenPageProps) {
   const onPressHandler = () => {
