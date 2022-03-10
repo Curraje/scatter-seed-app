@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 
+// Consider using styled-components library for styles that will be on every View, Text, etc.
 export default StyleSheet.create({
   body: {
     flex: 1,

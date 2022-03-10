@@ -1,11 +1,12 @@
 import React from "react";
 import App from "./src/App";
+import scatterSeedTheme from "./src/theme";
 import { registerRootComponent } from "expo";
 import { Provider as PaperProvider } from "react-native-paper";
 
 function Main() {
   return (
-    <PaperProvider>
+    <PaperProvider theme={scatterSeedTheme}>
       <App />
     </PaperProvider>
   );
