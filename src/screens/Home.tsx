@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   updateBody: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#0080ff",
+    backgroundColor: "#000000",
   },
   updateImage: {
     width:100,

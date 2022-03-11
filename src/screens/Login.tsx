@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image, Text, TextInput, Alert } from "react-native";
 import CustomButton from "../utils/CustomButton";
+import CustomeComponent from "../utils/CustomeComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage"; 
 import GlobalStyles from "../utils/GlobalStyles";
 
@@ -59,17 +60,7 @@ export default function Login({ navigation }: any) {
         placeholder="Username"
         onChangeText={(value) => setName(value)}
       />
-      <TextInput 
-        style={styles.loginInput}
-        placeholder="Enter your Age"
-        onChangeText={(value) => setAge(value)}
-      />
-      <CustomButton
-        title="Login"
-        regular_color="#1eb900"
-        pressed_color="#1eb999"
-        onPressFunction={setData}
-      />
+      <CustomeComponent></CustomeComponent>
     </View>
   );
 }
@@ -78,7 +69,7 @@ const styles = StyleSheet.create({
   loginBody: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#0080ff",
+    backgroundColor: "#000000",
   },
   loginImage: {
       width:100,
@@ -100,4 +91,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
   },
+
 });
