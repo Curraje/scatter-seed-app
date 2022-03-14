@@ -12,6 +12,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     fontWeight: "bold",
   },
+  headerText: {
+    fontSize: 34,
+    alignItems: "center",
+    fontWeight: "bold",
+  },
+  button: {
+    width: 300,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 10,
+    backgroundColor: "#b3ffe0",
+    borderRadius: 10,
+  },
 });
 
 export default styles;
