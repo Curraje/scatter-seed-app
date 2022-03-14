@@ -9,7 +9,12 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 type HomePageProps = Navigation.AppTabsPageProps<"Home">;
 
 export default function HomePage({ navigation }: HomePageProps) {
-  const onPressHandler = () => {
+  //navigate to the garden
+  const gardenHandler = () => {
+    navigation.navigate("Garden");
+  };
+  //navigate to the tasks page
+  const tasksHandler = () => {
     navigation.navigate("Tasks");
   };
 
@@ -42,7 +47,7 @@ export default function HomePage({ navigation }: HomePageProps) {
           />
         )}  
         mode="contained" 
-        onPress={() => console.log("Pressed")}
+        onPress={gardenHandler}
       >
         Go To Garden
       </Button>
@@ -81,9 +86,9 @@ export default function HomePage({ navigation }: HomePageProps) {
         )}  
         style={styles.button}
         mode="contained" 
-        onPress={() => console.log("Pressed")}
+        onPress={tasksHandler}
       >
-        Yearly Tasks
+        All Tasks
       </Button>
     </View>
   );
