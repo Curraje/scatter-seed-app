@@ -15,12 +15,23 @@ export default function HomePage({ navigation }: HomePageProps) {
 
   return (
     <View style={GlobalStyles.body}>
+
+      
+
       <FontAwesome5
         name={"envira"}
         size={150}
         color={"#595959"}
       />
       <Text style={styles.headerText}>Welcome to the ScatterSeed</Text>
+      <Text style={styles.subheader}>Upcoming Chores</Text>
+      
+      <View style={styles.choreBlock}>
+        <Text style={styles.chore}>Task 1 - Due March 15, 2022</Text>
+        <Text style={styles.chore}>Task 2 - Due Smarch 11, 2023</Text>
+        <Text style={styles.chore}>Task 3 - Stupid Smarch</Text>
+        <Text style={styles.chore}>Task 4 - April 1, 2022 (NOT A JOKE)</Text>
+      </View>
 
       <Button 
         style={styles.button}  

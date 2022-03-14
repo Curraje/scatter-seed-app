@@ -7,8 +7,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  choreBlock: {
+    width: "55%",
+    height: "30%",
+    alignItems: "flex-start",
+    justifyContent: "space-around",
+  },
   text: {
     fontSize: 14,
+    alignItems: "center",
+    fontWeight: "bold",
+  },
+  chore: {
+    fontSize: 12,
+    alignItems: "flex-start",
+  },
+  subheader: {
+    fontSize: 20,
     alignItems: "center",
     fontWeight: "bold",
   },
