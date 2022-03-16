@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Pressable, Text, View } from "react-native";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./garden.styles";
+import GardenPlanner from "../../components/GardenPlanner";
 
 type GardenPageProps = Navigation.AppTabsPageProps<"Garden">;
 
@@ -21,6 +22,7 @@ export default function GardenPage({ navigation }: GardenPageProps) {
       >
         <Text style={styles.text}>Home</Text>
       </Pressable>
+      <GardenPlanner></GardenPlanner>
     </View>
   );
 }
