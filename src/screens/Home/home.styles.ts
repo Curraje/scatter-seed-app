@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   choreBlock: {
+    flex: 1,
     width: "55%",
     height: "30%",
     alignItems: "flex-start",
