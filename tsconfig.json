@@ -20,8 +20,7 @@
     "allowSyntheticDefaultImports": true,
     "removeComments": true,
     "resolveJsonModule": true,
-    "allowUnreachableCode": false,
-    "typeRoots": ["./node_modules/@types", "./src/@types"]
+    "allowUnreachableCode": false
   },
   "include": ["src", "babel.config.js"],
   "exclude": ["node_modules"]

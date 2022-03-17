@@ -15,3 +15,7 @@ web-build/
 
 .vscode
 .history/
+
+.env
+*.log
+package-lock.json
