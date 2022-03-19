@@ -3,19 +3,10 @@ import Router from "./navigation";
 import { Provider as PaperProvider } from "react-native-paper";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import scatterSeedTheme from "./theme";
-import { isDevelopment } from "./utils/helper.utils";
-import { IP, PORT, PRODUCTION_URL } from "react-native-dotenv";
-
-const uri = isDevelopment
-  ? `http://${IP || "localhost"}:${PORT || 4000}/graphql`
-  : `${PRODUCTION_URL}/graphql`;
-
-console.log("IP", IP);
-console.log("PORT", PORT);
-console.log("URI", uri);
+import { API_URL } from "./utils/api.utils";
 
 const client = new ApolloClient({
-  uri: uri,
+  uri: API_URL,
   cache: new InMemoryCache(),
 });
 
