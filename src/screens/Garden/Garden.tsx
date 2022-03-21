@@ -4,6 +4,8 @@ import { Pressable, Text, View } from "react-native";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./garden.styles";
 import GardenPlanner from "../../components/GardenPlanner";
+import GestureTest from "../../components/GestureTest";
+import Testc from "../../components/GestureTest";
 
 type GardenPageProps = Navigation.AppTabsPageProps<"Garden">;
 
