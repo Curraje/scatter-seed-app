@@ -121,7 +121,7 @@ class GardenPlanner extends Component {
           ctx.fillRect(TargetX*square+square*0.25, TargetY*square+square*0.25, BedX*square-square*0.5, BedY*square-square*0.5);
         }
       }//*/
-      if(i < this.beds.length && this.beds[i].doesIntersect(bed)){
+      if(i < this.beds.length-1 && this.beds[i].doesIntersect(bed)){
         ToastAndroid.show("intersects "+this.beds[i].name, ToastAndroid.SHORT);
       }
     }else{
