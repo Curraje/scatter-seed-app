@@ -15,15 +15,15 @@ const styles = StyleSheet.create({
   chore: {
     fontSize: 12,
     alignItems: "flex-start",
-    padding: 13,
-    // margin: 10,
+    padding: 23,
+    margin: 10,
     backgroundColor: "#d2ebf9",
   },
   chore1: {
     fontSize: 12,
     alignItems: "flex-start",
     padding: 13,
-    // margin: 10,
+    margin: 10,
     backgroundColor: "#78c2ed",
   },
   subheader: {

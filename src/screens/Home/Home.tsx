@@ -6,6 +6,7 @@ import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./home.styles";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
+
 type HomePageProps = Navigation.AppTabsPageProps<"Home">;
 
 export default function HomePage({ navigation }: HomePageProps) {
