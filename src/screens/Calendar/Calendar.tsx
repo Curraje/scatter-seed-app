@@ -180,11 +180,9 @@ const PlantItem = ({ plant }: any) => {
             <Text>Close Modal</Text>
           </Button>
         </View>
-      </Modal>
+      </Modal> 
 
-      <PlantingCalendar/>      
-
-      <Button 
+      {/* <Button 
         icon="camera"
         mode="contained"
         onPress={() => {
@@ -193,7 +191,13 @@ const PlantItem = ({ plant }: any) => {
         style={styles.button}
       >
         <Text style={styles.plantName}>{plant.CommonName}</Text>
-      </Button>
+      </Button> */}
+      <PlantingCalendar
+        pressFunction={() => {
+          setModalVisible(!modalVisible);
+        }}
+        name={plant.CommonName}
+      /> 
     </View>
   );
 };
