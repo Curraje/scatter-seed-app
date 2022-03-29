@@ -15,61 +15,133 @@ export default function PlantingCalendar(props: any)
             <Text style={styles.monthText}>
             Jan
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Feb
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Mar
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Apr
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             May
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Jun
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Jul
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Aug
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Sep
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Oct
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Nov
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
           <View style={styles.month}>
             <Text style={styles.monthText}>
             Dec
             </Text>
+            <View style={styles.weekView}>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+              <View style={styles.week}></View>
+            </View>
           </View>
         </View>
       </View>
