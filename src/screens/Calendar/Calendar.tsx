@@ -5,6 +5,7 @@ import styles from "./calendar.styles";
 import { gql, useQuery } from "@apollo/client";
 import { Button } from "react-native-paper";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import PlantingCalendar from "../../components/CalendarComponent";
 
 // FIXME: Temporary proof of concept
 const PLANTS_QUERY = gql`
@@ -53,6 +54,7 @@ const PlantItem = ({ plant }: any) => {
         }}
       >
         <View style={GlobalStyles.body}>
+         
           <View style={styles.container}>
             <Text style={styles.plantName}>{plant.CommonName}</Text>
             <Text style={styles.scientificText}>{plant.BotanicalName}</Text>
@@ -180,6 +182,7 @@ const PlantItem = ({ plant }: any) => {
         </View>
       </Modal>
 
+      <PlantingCalendar/>      
 
       <Button 
         icon="camera"
