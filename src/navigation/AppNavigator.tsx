@@ -4,6 +4,8 @@ import TasksPage from "../screens/Tasks";
 import SettingsPage from "../screens/Settings";
 import GardenPage from "../screens/Garden";
 import CalendarPage from "../screens/Calendar";
+import LoginPage from "../screens/Login";
+import RegisterPage from "../screens/Register";
 // import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -58,6 +60,8 @@ export default function AppNavigator() {
       <Tab.Screen name="Home" component={HomePage} />
       <Tab.Screen name="Calendar" component={CalendarPage} />
       <Tab.Screen name="Settings" component={SettingsPage} />
+      <Tab.Screen name="Login" component={LoginPage} />
+      <Tab.Screen name="Register" component={RegisterPage} />
     </Tab.Navigator>
   );
 }

@@ -5,6 +5,7 @@ export default StyleSheet.create({
   body: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#e2f2fb", //I like this colour as the main colour for the App - THOUGHTS?
   },
   text: {

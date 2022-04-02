@@ -5,6 +5,8 @@ declare namespace Navigation {
     Calendar: undefined;
     Garden: undefined;
     Settings: undefined;
+    Login: undefined;
+    Register: undefined;
   };
 
   export declare type AppTabsPageProps<T extends keyof AppTabsParamList> =
