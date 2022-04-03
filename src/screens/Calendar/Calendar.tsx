@@ -6,6 +6,7 @@ import { gql, useQuery } from "@apollo/client";
 import { Button } from "react-native-paper";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import PlantingCalendar from "../../components/CalendarComponent";
+import PlantVarietyScreenComponent from "../../components/PlantVarietyComponent";
 
 // FIXME: Temporary proof of concept
 const PLANTS_QUERY = gql`
@@ -44,6 +45,7 @@ const PlantItem = ({ plant }: any) => {
 
   return (
     <View style={styles.container}>
+      
       <Modal
         animationType="slide"
         transparent={true}
@@ -182,18 +184,9 @@ const PlantItem = ({ plant }: any) => {
         </View>
       </Modal> 
 
-      {/* <Button 
-        icon="camera"
-        mode="contained"
-        onPress={() => {
-          setModalVisible(!modalVisible);
-        }}
-        style={styles.button}
-      >
-        <Text style={styles.plantName}>{plant.CommonName}</Text>
-      </Button> */}
+      
       <PlantingCalendar
-        pressFunction={() => {
+        onPressFunction={() => {
           setModalVisible(!modalVisible);
         }}
         name={plant.CommonName}
@@ -220,13 +213,7 @@ export default function CalendarPage({ navigation }: CalendarPageProps) {
   return (
     <View style={GlobalStyles.body}>
       <Text>Planting Calendar</Text>
-      {/* <StatusBar style="auto" />
-      <Pressable
-        onPress={onPressHandler}
-        style={({ pressed }) => ({ backgroundColor: pressed ? "#555" : "#ddd" })}
-      >
-        <Text style={styles.text}>Home</Text>
-      </Pressable> */}
+      
       {/* FIXME: Temporary Proof of Concept */}
       
       <FlatList
