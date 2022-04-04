@@ -5,11 +5,21 @@ class GardenBed {
     leftX;
     name;
 
-    constructor(width, height, leftX, topY, name) {
-        this.height = height;
-        this.width = width;
-        this.topY = topY;
-        this.leftX = leftX;
+    constructor(x1, y1, x2, y2, name) {
+
+        if(x1 <= x2){
+            this.leftX = x1;
+        }else{
+            this.leftX = x2;
+        }
+        if(y1 <= y2){
+            this.topY = y1;
+        }else{
+            this.topY = y2;
+        }
+
+        this.height = Math.abs(y2-y1)+1;
+        this.width = Math.abs(x2-x1)+1;
         this.name = name;
     }
 

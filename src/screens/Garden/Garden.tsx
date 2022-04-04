@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./garden.styles";
 import GardenPlanner from "../../components/GardenPlanner";
@@ -15,7 +15,7 @@ export default function GardenPage({ navigation }: GardenPageProps) {
   };
 
   return (
-    <View style={GlobalStyles.body}>
+    <View style={GardenStyles.body}>
       <Text>Garden</Text>
       <StatusBar style="auto" />
       <Pressable
@@ -28,3 +28,11 @@ export default function GardenPage({ navigation }: GardenPageProps) {
     </View>
   );
 }
+
+const GardenStyles = StyleSheet.create({
+  body: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#e2f2fb", //I like this colour as the main colour for the App - THOUGHTS?
+  },
+});

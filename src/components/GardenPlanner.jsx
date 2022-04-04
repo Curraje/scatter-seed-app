@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import Canvas from 'react-native-canvas';
 import { StyleSheet, Text, View, ScrollView, PanResponder, 
           ToastAndroid,Animated,TouchableOpacity,TouchableHighlight,
-          Platform,Alert, Modal, TextInput, SafeAreaView, Button
+          Platform,Alert, Modal, TextInput, SafeAreaView, Button, StatusBar
         } from 'react-native';
 import { Dimensions } from 'react-native';
 import GardenBed from '../classes/GardenBed';
 
 //size of the element
 const WSIZE = Dimensions.get('window').width;
+const HSIZE = Dimensions.get('window').height;
+var ModalLocation
 //number of squares 
-const divisor = 40;
+const divisor = 15;
 //size of a single unit (feet?)
 const square = WSIZE/divisor;
 
@@ -20,7 +22,8 @@ var TargetY=0;
 //stores bed creation parameters
 var BedX=1;
 var BedY=1;
-var BedName="";
+
+var TargetBed;
 
 
 
@@ -32,22 +35,33 @@ class GardenPlanner extends Component {
   beds = [];
 
   state = {
-    modalVisible: false
+    addNewVisible: false,
+    editVisible: false,
+    bedName: "",
+    bedNotes: "",
+    //plant variety
   };
-  setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
+  setaddNewVisible = (visible) => {
+    this.setState({ addNewVisible: visible });
+  }
+  setEditVisible = (visible) => {
+    this.setState({ editVisible: visible });
+  }
+  setBedName = (text) => {
+    this.setState({ bedName: text });
+  }
+  setBedNotes = (visible) => {
+    this.setState({ bedNotes: visible });
   }
   handleCanvas = (canvas) => {
     if(canvas !== null){
       ctx = canvas.getContext('2d');
-      canvas.width = Dimensions.get('window').width;
-      canvas.height = Dimensions.get('window').width;
+      canvas.width = WSIZE;
+      canvas.height = WSIZE;
       this.CanvasNew();
-      }
     }
+  }
   CanvasNew(){
-      windowWidth = Dimensions.get('window').width;
-      windowHeight = Dimensions.get('window').height;
       size = WSIZE;
       ctx.fillStyle = 'white';
       ctx.fillRect(0, 0, size, size);
@@ -59,13 +73,11 @@ class GardenPlanner extends Component {
         ctx.moveTo(0, size/divisor*(i));
         ctx.lineTo(size, size/divisor*(i));
         ctx.stroke();
-        /*
-        for (let ii = 0; ii <= divisor-1; ii++) {
-          ctx.fillStyle = "white";
-          ctx.fillRect(size/divisor*(i), size/divisor*(ii), size/divisor, size/divisor);
-        }//*/
-        
       }//*/
+      for (let i = 0; i < this.beds.length; i++) {
+          this.DrawBed(this.beds[i]);
+      }
+
   }
   onTouch(evt){
     var x = Math.floor(evt.nativeEvent.locationX/square)+1;
@@ -75,27 +87,30 @@ class GardenPlanner extends Component {
     BedX=1;
     BedY=1;
     
-    //ctx.fillStyle = "red";
-    //ctx.fillRect((x-1)*square, (y-1)*square, square, square);
-    
     if(this.beds.length > 0){
-      //ToastAndroid.show(this.beds[0].topY.toString(), ToastAndroid.SHORT);
       
       var i = 0;
       while(i < this.beds.length && !this.beds[i].didTouch(TargetX,TargetY)){
         i++;
         if(i == this.beds.length){
-          this.setModalVisible(true);
+          this.setaddNewVisible(true);
         }
       }//*/
       if(i < this.beds.length && this.beds[i].didTouch(TargetX,TargetY)){
         ToastAndroid.show(this.beds[i].name, ToastAndroid.SHORT);
+        this.OpenBedEdit(this.beds[i]);
       }
     }else{
-      this.setModalVisible(true);
+      this.setaddNewVisible(true);
     }
     
     
+  }
+
+  OpenBedEdit(bed){
+    TargetBed = bed;
+    
+    this.setEditVisible(true);
   }
 
   generateColor() {
@@ -104,21 +119,25 @@ class GardenPlanner extends Component {
       .padStart(6, '0');
     return `#${randomColor}`;
   }
+  DrawBed(bed){
+    ctx.fillStyle = this.generateColor();
+    ctx.fillRect(bed.leftX*square, bed.topY*square, bed.width*square, bed.height*square);
+    ctx.fillStyle = "white";
+    ctx.fillRect(bed.leftX*square+square*0.25, bed.topY*square+square*0.25, bed.width*square-square*0.5, bed.height*square-square*0.5);
+  }
+  
+  onSecondTouch(evt){
+    var x = Math.floor(evt.nativeEvent.locationX/square);
+    var y = Math.floor(evt.nativeEvent.locationY/square);
+    var bed = new GardenBed(TargetX, TargetY, x, y, "");
 
-  ClosePrompt(/*startX, startY, sizeX, sizeY*/){
-    var bed = new GardenBed(BedX, BedY,TargetX, TargetY, BedName);
     if(this.beds.length > 0){
-      //ToastAndroid.show(this.beds[0].topY.toString(), ToastAndroid.SHORT);
-      
       var i = 0;
       while(i < this.beds.length && !this.beds[i].doesIntersect(bed)){
         i++;
         if(i == this.beds.length){
           this.beds.push(bed);
-          ctx.fillStyle = this.generateColor();
-          ctx.fillRect(TargetX*square, TargetY*square, BedX*square, BedY*square);
-          ctx.fillStyle = "white";
-          ctx.fillRect(TargetX*square+square*0.25, TargetY*square+square*0.25, BedX*square-square*0.5, BedY*square-square*0.5);
+          this.DrawBed(bed);
         }
       }//*/
       if(i < this.beds.length-1 && this.beds[i].doesIntersect(bed)){
@@ -126,16 +145,30 @@ class GardenPlanner extends Component {
       }
     }else{
       this.beds.push(bed);
-      ctx.fillStyle = this.generateColor();
-      ctx.fillRect(TargetX*square, TargetY*square, BedX*square, BedY*square);
-      ctx.fillStyle = "white";
-      ctx.fillRect(TargetX*square+square*0.25, TargetY*square+square*0.25, BedX*square-square*0.5, BedY*square-square*0.5);
+      this.DrawBed(bed);
     }
-    BedName = "";
-    this.setModalVisible(false);
+    this.ClosePrompt();
   }
+  DeleteBed(bed = TargetBed){
+    for (let i = 0; i < this.beds.length; i++) {
+      if(bed == this.beds[i]){
+        this.beds.splice(i, 1);
+      }
+    }
+    this.CanvasNew();
+    this.CloseEdit();
+  }
+
+  ClosePrompt(){
+    this.setaddNewVisible(false);
+  }
+  CloseEdit(){
+    this.setEditVisible(false);
+  }
+
   editBedName(text){
-    BedName = text;
+    TargetBed.name = text;
+    this.setBedName(TargetBed.name);
   }
   editTargetY(text){
     TargetY=parseInt(text);
@@ -149,37 +182,73 @@ class GardenPlanner extends Component {
   editBedX(text){
     BedX=parseInt(text);
   }
+  //*/
+  promptStyle = function(options) {
+    return {
+      paddingTop: 5,
+      top: ModalLocation,
+      width: WSIZE,
+      //backgroundColor: "gray",
+      elevation: 5
+    }
+  }
 
   render() {
-    const { modalVisible } = this.state;
+    const { addNewVisible, editVisible, bedName, bedNotes } = this.state;
     return (
-      <TouchableOpacity onPress={(evt) => this.onTouch(evt) } style={styles.GardenView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.prompt}>
-          <TextInput style={styles.input} placeholder={"Garden name"} onChangeText={text => this.editBedName(text)}/>
-          <TextInput style={styles.input} placeholder={TargetX.toString()} onChangeText={text => this.editTargetX(text)}/>
-          <TextInput style={styles.input} placeholder={TargetY.toString()} onChangeText={text => this.editTargetY(text)}/>
-          <TextInput style={styles.input} placeholder={BedX.toString()} onChangeText={text => this.editBedX(text)}/>
-          <TextInput style={styles.input} placeholder={BedY.toString()} onChangeText={text => this.editBedY(text)}/>
+      <View
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          ModalLocation = StatusBar.currentHeight+layout.y;
+        }}
+      >
+        <TouchableOpacity onPress={(evt) => this.onTouch(evt) } style={styles.GardenView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={addNewVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              this.setaddNewVisible(!addNewVisible);
+            }}
+          >
+            <View style={this.promptStyle()}>
+            <TouchableOpacity  onPress={(evt) => this.onSecondTouch(evt) } style={styles.Overlay}>
+            </TouchableOpacity>
+            <Button
+              title="Cancel"
+              color="#f194ff"
+              onPress={() => this.ClosePrompt()}
+            />
+            </View>
+          </Modal>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={editVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              this.setaddNewVisible(!editVisible);
+            }}
+          >
+            <View style={styles.prompt}>
+              <TextInput style={styles.input} value={bedName} onChangeText={text => this.editBedName(text)}/>
 
-          <Button
-            title="Create Bed"
-            color="#f194ff"
-            onPress={() => this.ClosePrompt()}
-          />
-          </View>
-        </Modal>
-        <Canvas ref={this.handleCanvas} style={styles.canvas}/>
-      </TouchableOpacity>
-
+              <Button
+                title="Close Bed Screen"
+                color="#f194ff"
+                onPress={() => this.CloseEdit()}
+              />
+              <Button
+                title="Delete Bed"
+                color="#f194ff"
+                onPress={() => this.DeleteBed()}
+              />
+            </View>
+          </Modal>
+          <Canvas ref={this.handleCanvas} style={styles.canvas}/>
+        </TouchableOpacity>
+      </View>
     )
   }
 }
@@ -198,6 +267,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#aaccaa",
     alignItems: "center",
     justifyContent: "center",
+  },
+  Overlay: {
+    width: WSIZE,
+    height: WSIZE,
+    backgroundColor: 'rgba(200, 200, 200, 0.2)',
   },
   prompt:{
     margin: 20,
@@ -221,90 +295,4 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-});//*/
-
-
-/*import { StyleSheet, Text, View } from 'react-native';
-import Canvas from 'react-native-canvas';
-
-const GridGarden = (props: any) => {
-  const handleCanvas = (canvas: Canvas) => {
-    var size = 400
-      var divisor = 6
-      canvas.width = size;
-      canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = 'white';
-      ctx.fillRect(0, 0, size, size);
-      for (let i = 0; i <= divisor; i++) {
-        ctx.moveTo(size/divisor*(i), 0);
-        ctx.lineTo(size/divisor*(i), size);
-        ctx.stroke();
-        ctx.moveTo(0, size/divisor*(i));
-        ctx.lineTo(size, size/divisor*(i));
-        ctx.stroke();
-      }
-  }
-  return (
-    <View style={styles.GardenView}>
-      <Canvas ref={handleCanvas}/>
-    </View>
-      
-  );
-
-}
-export default GridGarden;//*/
-/*
-const styles = StyleSheet.create({
-  GardenView: {
-    width: 400,
-    height: 400,
-  }
-})//*/
-
-
-/*
-import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Canvas from 'react-native-canvas';
-
-class GridGarden extends Component {
-  //
-  handleCanvas = (canvas: Canvas) => {
-    const ctx = canvas.getContext('2d');
-    var size = 400
-    var divisor = 4
-    canvas.width = size;
-    canvas.height = size;
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, size, size);
-    
-    for (let i = 0; i <= divisor; i++) {
-      ctx.moveTo(size/divisor*(i), 0);
-      ctx.lineTo(size/divisor*(i), size);
-      ctx.stroke();
-      ctx.moveTo(0, size/divisor*(i));
-      ctx.lineTo(size, size/divisor*(i));
-      ctx.stroke();
-    }
-    
-  }
-
-  render() {
-    return (
-      <View style={styles.canvas}>
-        <canvas ref={this.handleCanvas}/>
-      </View>
-      
-    );
-  }
-}
-
-export default GridGarden;
-
-const styles = StyleSheet.create({
-  canvas: {
-    width: 400,
-    height: 400,
-  }
-});//*/
+});
