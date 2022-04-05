@@ -6,6 +6,7 @@ import { gql, useQuery } from "@apollo/client";
 import { Button } from "react-native-paper";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import PlantingCalendar from "../../components/CalendarComponent";
+import CalendarCanvas from "../../components/CanvasCalendar";
 import PlantCalendar from "../../components/CanvasCalendar";
 
 // FIXME: Temporary proof of concept
@@ -46,7 +47,6 @@ const PlantItem = ({ plant }: any) => {
   return (
     <View style={styles.container}>
 
-      <PlantCalendar/>
 
       <Modal
         animationType="slide"
@@ -221,17 +221,11 @@ export default function CalendarPage({ navigation }: CalendarPageProps) {
     navigation.navigate("Home");
   };
 
+
   return (
     <View style={GlobalStyles.body}>
+
       <Text>Planting Calendar</Text>
-      {/* <StatusBar style="auto" />
-      <Pressable
-        onPress={onPressHandler}
-        style={({ pressed }) => ({ backgroundColor: pressed ? "#555" : "#ddd" })}
-      >
-        <Text style={styles.text}>Home</Text>
-      </Pressable> */}
-      {/* FIXME: Temporary Proof of Concept */}
       
       <FlatList
         data={data?.plants}
