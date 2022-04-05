@@ -6,6 +6,7 @@ import { gql, useQuery } from "@apollo/client";
 import { Button } from "react-native-paper";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import PlantingCalendar from "../../components/CalendarComponent";
+import PlantCalendar from "../../components/CanvasCalendar";
 
 // FIXME: Temporary proof of concept
 const PLANTS_QUERY = gql`
@@ -44,6 +45,9 @@ const PlantItem = ({ plant }: any) => {
 
   return (
     <View style={styles.container}>
+
+      <PlantCalendar/>
+
       <Modal
         animationType="slide"
         transparent={true}
