@@ -16,11 +16,10 @@ export default function AppNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: "#000",
-        tabBarActiveTintWeight: "bold",
-        tabBarInactiveTintColor: "#595959",
-        tabBarActiveBackgroundColor: "#35a4e3",
-        tabBarInactiveBackgroundColor: "#62b8ea",
+        tabBarActiveTintColor: "#fbf0e2",
+        tabBarInactiveTintColor: "#7a4b0e",
+        tabBarActiveBackgroundColor: "#7a4b0e",
+        tabBarInactiveBackgroundColor: "#fbf0e2",
         tabBarShowLabel: true,
         tabBarLabelStyle: {
           fontSize: 14,
@@ -49,7 +48,7 @@ export default function AppNavigator() {
             <FontAwesome5
               name={iconName}
               size={focused ? 20 : 14}
-              color={focused ? "#000" : "#595959"}
+              color={focused ? "#fbf0e2" : "#7a4b0e"}
             />
           );
         },

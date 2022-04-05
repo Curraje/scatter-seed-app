@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     width: "60%",
     height: "30%",
     // alignItems: "flex-start",
-    backgroundColor: "#bce1f6",
+    backgroundColor: "#fbf0e2",
   },
 });
 
