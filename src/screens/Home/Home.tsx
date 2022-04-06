@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, Text, View } from "react-native";
+import { Modal, Pressable, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./home.styles";
@@ -10,7 +10,33 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 type HomePageProps = Navigation.AppTabsPageProps<"Home">;
 
 export default function HomePage({ navigation }: any ) {
+
+  const signedIn = true;
+  const gardensExist = true;
+
+
+  const [modalSelectVisible, setModalSelectVisible] = useState(false);
+  const [modalCreateVisible, setModalCreateVisible] = useState(false);
   //navigate to the garden
+  const selectGardenHandler = () => {
+    if(gardensExist){
+      //use selected garden
+      switchSelectModal();
+    }else{
+      createGardenHandler();
+    }
+  };
+
+  const createGardenHandler = () => {
+    //if not signed in
+    if(!signedIn){
+      loginHandler();
+    }else{
+      switchCreateModal();
+      //open modal for crteating a garden
+    }
+  };
+
   const gardenHandler = () => {
     navigation.navigate("Garden");
   };
@@ -23,9 +49,40 @@ export default function HomePage({ navigation }: any ) {
     navigation.navigate("Login");
   };
 
+  const switchSelectModal = () => {
+    setModalSelectVisible(!modalSelectVisible);
+  };
+  const switchCreateModal = () => {
+    setModalCreateVisible(!modalCreateVisible);
+  };
+
+  //const { addNewVisible, editVisible} = this.state;
   return (
     <View style={GlobalStyles.body}>
-
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalSelectVisible}
+        onRequestClose={() => {
+          switchSelectModal();
+        }}
+      >
+        <View style={GlobalStyles.body}>
+          <Text>select yo shit</Text>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalCreateVisible}
+        onRequestClose={() => {
+          switchCreateModal();
+        }}
+      >
+        <View style={GlobalStyles.body}>
+          <Text>create yo shit</Text>
+        </View>
+      </Modal>
       
 
       <FontAwesome5
@@ -45,7 +102,7 @@ export default function HomePage({ navigation }: any ) {
           />
         )}  
         mode="contained" 
-        onPress={gardenHandler}
+        onPress={selectGardenHandler}
       >
         Go To Garden
       </Button>
@@ -58,7 +115,7 @@ export default function HomePage({ navigation }: any ) {
           />
         )} 
         mode="contained" 
-        onPress={loginHandler}
+        onPress={createGardenHandler}
       >
         Create Garden (Go to login)
       </Button>
