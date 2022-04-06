@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
 import React, { Component } from 'react';
 import Canvas from 'react-native-canvas';
 import { StyleSheet, Text, View, ScrollView, PanResponder, 
-          ToastAndroid,Animated,TouchableOpacity,TouchableHighlight,
-          Platform,Alert, Modal, TextInput, SafeAreaView, Button, StatusBar
-        } from 'react-native';
+  ToastAndroid,Animated,TouchableOpacity,TouchableHighlight,
+  Platform,Alert, Modal, TextInput, SafeAreaView, StatusBar
+} from 'react-native';
+import { Button } from 'react-native-paper';
 import { Dimensions } from 'react-native';
 import GardenBed from '../classes/GardenBed';
 
@@ -40,16 +42,16 @@ class GardenPlanner extends Component {
   };
   setaddNewVisible = (visible) => {
     this.setState({ addNewVisible: visible });
-  }
+  };
   setEditVisible = (visible) => {
     this.setState({ editVisible: visible });
-  }
+  };
   setBedName = (text) => {
     this.setState({ bedName: text });
-  }
+  };
   setBedNotes = (visible) => {
     this.setState({ bedNotes: visible });
-  }
+  };
   handleCanvas = (canvas) => {
     if(canvas !== null){
       ctx = canvas.getContext('2d');
@@ -57,23 +59,23 @@ class GardenPlanner extends Component {
       canvas.height = WSIZE;
       this.CanvasNew();
     }
-  }
+  };
   CanvasNew(){
-      size = WSIZE;
-      ctx.fillStyle = 'white';
-      ctx.fillRect(0, 0, size, size);
+    size = WSIZE;
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, size, size);
       
-      for (let i = 0; i <= divisor; i++) {
-        ctx.moveTo(size/divisor*(i), 0);
-        ctx.lineTo(size/divisor*(i), size);
-        ctx.stroke();
-        ctx.moveTo(0, size/divisor*(i));
-        ctx.lineTo(size, size/divisor*(i));
-        ctx.stroke();
-      }//*/
-      for (let i = 0; i < this.beds.length; i++) {
-          this.DrawBed(this.beds[i]);
-      }
+    for (let i = 0; i <= divisor; i++) {
+      ctx.moveTo(size/divisor*(i), 0);
+      ctx.lineTo(size/divisor*(i), size);
+      ctx.stroke();
+      ctx.moveTo(0, size/divisor*(i));
+      ctx.lineTo(size, size/divisor*(i));
+      ctx.stroke();
+    }//*/
+    for (let i = 0; i < this.beds.length; i++) {
+      this.DrawBed(this.beds[i]);
+    }
 
   }
   onTouch(evt){
@@ -185,10 +187,11 @@ class GardenPlanner extends Component {
       paddingTop: 5,
       top: ModalLocation,
       width: WSIZE,
+      alignItems: "center",
       //backgroundColor: "gray",
-      elevation: 5
-    }
-  }
+      // elevation: 5,
+    };
+  };
 
   render() {
     const { addNewVisible, editVisible, bedName, bedNotes } = this.state;
@@ -210,13 +213,17 @@ class GardenPlanner extends Component {
             }}
           >
             <View style={this.promptStyle()}>
-            <TouchableOpacity  onPress={(evt) => this.onSecondTouch(evt) } style={styles.Overlay}>
-            </TouchableOpacity>
-            <Button
-              title="Cancel"
-              color="#f194ff"
-              onPress={() => this.ClosePrompt()}
-            />
+              <TouchableOpacity  onPress={(evt) => this.onSecondTouch(evt) } style={styles.Overlay}>
+              </TouchableOpacity>
+              <Button
+                title="Cancel"
+                icon="close"
+                style={styles.modalButton}
+                onPress={() => this.ClosePrompt()}
+                mode="contained"
+              >
+              Close Prompt
+              </Button>
             </View>
           </Modal>
           <Modal
@@ -233,20 +240,26 @@ class GardenPlanner extends Component {
 
               <Button
                 title="Close Bed Screen"
-                color="#f194ff"
+                icon="undo"
+                style={styles.modalButton}
                 onPress={() => this.CloseEdit()}
-              />
+                mode="contained"
+              >
+                Close Modal
+              </Button>
               <Button
                 title="Delete Bed"
-                color="#f194ff"
+                icon="delete"
+                style={styles.modalButton}
                 onPress={() => this.DeleteBed()}
-              />
+                mode="contained"
+              >Delete Bed</Button>
             </View>
           </Modal>
           <Canvas ref={this.handleCanvas} style={styles.canvas}/>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
@@ -257,6 +270,16 @@ const styles = StyleSheet.create({
   canvas: {
     width: WSIZE,
     height: WSIZE,
+  },
+  modalButton: {
+    width: 300,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 10,
+    backgroundColor: "#fbf0e2",
+    borderRadius: 10,
+    color: "#7a4b0e",
   },
   GardenView: {
     width: WSIZE,
@@ -272,7 +295,7 @@ const styles = StyleSheet.create({
   },
   prompt:{
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "#bce1f6",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -283,7 +306,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 15,
   },
   input: {
     width: "60%",
@@ -291,5 +314,6 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    backgroundColor: "white",
   },
 });
