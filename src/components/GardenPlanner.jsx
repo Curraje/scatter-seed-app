@@ -10,29 +10,26 @@ import GardenBed from '../classes/GardenBed';
 //size of the element
 const WSIZE = Dimensions.get('window').width;
 const HSIZE = Dimensions.get('window').height;
-var ModalLocation
-//number of squares 
-const divisor = 15;
-//size of a single unit (feet?)
-const square = WSIZE/divisor;
-
-//stores where the screen has been touched
-var TargetX=0;
-var TargetY=0;
-//stores bed creation parameters
-var BedX=1;
-var BedY=1;
-
-var TargetBed;
+var divisor = 15;
+var square = WSIZE/divisor;
+var ModalLocation;
 
 
-
-//const WSIZE = 700;
 class GardenPlanner extends Component {
   //stores canvas context
   ctx;
+  
+
+  //stores where the screen has been touched
+  TargetX=0;
+  TargetY=0;
+  //stores bed creation parameters
+  BedX=1;
+  BedY=1;
+  
   //stores existing beds
   beds = [];
+  TargetBed;
 
   state = {
     addNewVisible: false,

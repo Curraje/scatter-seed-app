@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eefea232-56f5-482d-a75e-72bd11fc4142" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/GardenBed.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/GardenBed.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/GardenPlanner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GardenPlanner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Garden/Garden.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Garden/Garden.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
