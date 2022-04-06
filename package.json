@@ -14,7 +14,7 @@
     "prepare": "husky install",
     "schema:download": "npx apollo client:download-schema api-schema.gql",
     "schema:gen": "npx apollo client:codegen --target typescript --localSchemaFile api-schema.gql --outputFlat src/@generated",
-    "generate": "graphql-codegen --config codegen.yml",
+    "generate": "graphql-codegen --require dotenv/config --config codegen.yml",
     "postinstall": "npm run generate"
   },
   "dependencies": {
