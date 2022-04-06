@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   }, 
   weatherBottom: {
     flex: 2,
-    width: "80%",
+    width: "90%",
     alignItems: "center",
     flexDirection: "column",
     marginTop: 20,
@@ -61,6 +61,10 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     marginLeft: 15,
     flexDirection: "column",
+    justifyContent: "space-evenly",
+  },
+  rowView: {
+    flexDirection: "row",
     justifyContent: "space-evenly",
   },
   weatherLogo: {
