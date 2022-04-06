@@ -7,6 +7,26 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
   },
+  plantPageHeader: {
+    flex: 1, 
+    flexDirection: "row",
+    // justifyContent: "flex-start",
+    alignItems: "center",
+    marginLeft: 35,
+  },
+  plantPageHeaderIcon: {
+    flex: 1,
+    width: 175,
+    height: 175,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  plantPageHeaderText: {
+    flex: 2, 
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
   plantName: {
     fontSize: 24,
     textAlign: "left",
@@ -20,10 +40,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   closeButton: {
-
+    backgroundColor: "#fbf0e2",
+    color: "#7a4b0e",
   },
-  button: {
-
+  plantModal: {
+    width: "80%",
+    height: "90%",
+    justifyContent: "space-evenly",
+    alignItems: "flex-start",
   },
   headerText: {
     fontWeight: "bold",
@@ -46,14 +70,9 @@ const styles = StyleSheet.create({
   calendarBody: {
     width: 300,
     height: 48,
-    //backgroundColor: "green",
     justifyContent: "space-evenly",
-    // alignContent: "center",
-    // alignItems: "center",
     flexDirection: "column",
-    // borderRadius: 20,
     borderWidth: 1,
-    // marginBottom: 22,
   },
   monthTextView: {
     flex: 1,
@@ -62,46 +81,13 @@ const styles = StyleSheet.create({
     marginTop: -3,
     // padding: 5,
   },
-  // month: {
-  //   flex: 1,
-  //   width: 24,
-  //   height: 48,
-  //   backgroundColor: "red",
-  //   // borderRadius: 5,
-  //   // borderColor: "black",
-  //   // borderWidth: 1,
-  //   // opacity: 0.6,
-  //   flexDirection: "column",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   marginBottom: 22,
-  // },
   monthText: {
     fontSize: 9,
     fontWeight: "bold",
     justifyContent: "center",
   },
-  weekView: {
-    flex: 1,
-    width: 25,
-    height: 32,
-    flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "center",
-    borderRadius: 10,
-  },
-  week: {
-    flex: 1,
-    width: 25,
-    height: 32,
-    backgroundColor: "blue",
-    borderColor: "black",
-    // borderWidth: 0.3,
-    // borderRadius: 1,
-  },
   sowingInfo: {
     flexDirection: "row",
-    // marginLeft: 10,
   },
   sowingIndoors: {
     flexDirection: "row",

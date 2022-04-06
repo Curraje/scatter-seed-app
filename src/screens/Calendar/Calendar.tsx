@@ -58,144 +58,85 @@ const PlantItem = ({ plant }: any) => {
         }}
       >
         <View style={GlobalStyles.body}>
-         
-          <View style={styles.container}>
-            <Text style={styles.plantName}>{plant.CommonName}</Text>
-            <Text style={styles.scientificText}>{plant.BotanicalName}</Text>
-          </View>
-          <View style={styles.container}>
-            <Text style={styles.detailsText}>
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
+          <View style={styles.plantModal}>
+            <View style={styles.plantPageHeader}>
+              <View style={styles.plantPageHeaderIcon}>
+                <FontAwesome5
+                  name={"envira"}
+                  size={120}
+                  color={"green"}
+                />
+              </View>
+            
+              <View style={styles.plantPageHeaderText}>
+                <Text style={styles.plantName}>{plant.CommonName}</Text>
+                <Text style={styles.scientificText}>{plant.BotanicalName}</Text>
+              </View>
+            </View>
+          
+            <View style={styles.container}>
+              <Text style={styles.detailsText}>
               Type: {plant.PlantType}
-            </Text>
-            <Text style={styles.detailsText}> 
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
+              </Text>
+              <Text style={styles.detailsText}> 
               Sun Exposure: {plant.SunExposure}
-            </Text>
-            <Text style={styles.detailsText}>  
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
+              </Text>
+              <Text style={styles.detailsText}>  
               Min Full Sun: {plant.MinFullSun}
-            </Text>
-            <Text style={styles.detailsText}>  
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
-              Preferred Soil pH: {plant.SoilpH}
-            </Text>
-            <Text style={styles.detailsText}>  
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
+              </Text>
+              <Text style={styles.detailsText}>  
+              Soil pH: {plant.SoilpH}
+              </Text>
+              <Text style={styles.detailsText}>  
               Sun Exposure: {plant.SunExposure}
-            </Text>
-            <Text style={styles.detailsText}> 
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
+              </Text>
+              <Text style={styles.detailsText}> 
               Bloom Time: {plant.BloomTime}
-            </Text>
-            <Text style={styles.detailsText}>  
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
+              </Text>
+              <Text style={styles.detailsText}>  
               Flower Colour: {plant.FlowerColour}
-            </Text>
-            <Text style={styles.detailsText}> 
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
+              </Text>
+              <Text style={styles.detailsText}> 
               Ideal Temp: {plant.IdealTemp}
-            </Text>
-            <Text style={styles.detailsText}>  
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
+              </Text>
+              <Text style={styles.detailsText}>  
               Frost Hardy: {plant.FrostHardy}
-            </Text>
-            <Text style={styles.detailsText}>  
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
+              </Text>
+              <Text style={styles.detailsText}>  
               Hardiness Zones: {plant.HardinessZones}
-            </Text>
-          </View>
-          <View style={styles.container}>
-            <Text style={styles.detailsText}>
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              /> 
-               Seed Depth: {plant.SeedDepth}
-            </Text>
-            <Text style={styles.detailsText}>
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              />
-               Sprouts In: {plant.SproutsIn}
-
-            </Text>
-            <Text style={styles.detailsText}>
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              />
+              </Text>
+            </View>
+            <View style={styles.container}>
+              <Text style={styles.detailsText}>
+              Seed Depth: {plant.SeedDepth}
+              </Text>
+              <Text style={styles.detailsText}>
+              Sprouts In: {plant.SproutsIn}
+              </Text>
+              <Text style={styles.detailsText}>
               Plant Spacing: {plant.PlantSpacing}
-            </Text> 
-            <Text style={styles.detailsText}>
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              />
+              </Text> 
+              <Text style={styles.detailsText}>
               Row Spacing: {plant.RowWidth}
-            </Text>
-            <Text style={styles.detailsText}>
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
-              />
+              </Text>
+              <Text style={styles.detailsText}>
               Days To Maturity: {plant.DaystoMaturity}
-            </Text> 
+              </Text> 
+            </View>
+            <Button 
+              icon="close"
+              mode="contained"
+              style={styles.closeButton}
+              onPress={() => {
+                closeModal();
+              }}
+            >
+              <Text style={GlobalStyles.closeText}>Close Modal</Text>
+            </Button>
           </View>
-          <Button 
-            icon="camera"
-            mode="contained"
-            style={styles.closeButton}
-            onPress={() => {
-              closeModal();
-            }}
-          >
-            <Text>Close Modal</Text>
-          </Button>
         </View>
       </Modal> 
 
-      {/* <Button 
-        icon="camera"
-        mode="contained"
-        onPress={() => {
-          setModalVisible(!modalVisible);
-        }}
-        style={styles.button}
-      >
-        <Text style={styles.plantName}>{plant.CommonName}</Text>
-      </Button> */}
       <PlantingCalendar
         pressFunction={() => {
           setModalVisible(!modalVisible);

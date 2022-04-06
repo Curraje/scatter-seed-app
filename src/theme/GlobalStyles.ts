@@ -15,4 +15,9 @@ export default StyleSheet.create({
     fontWeight: "bold",
     margin: 10,
   },
+  closeText: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#7a4b0e",
+  },
 });
