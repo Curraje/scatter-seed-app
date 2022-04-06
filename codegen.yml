@@ -1,0 +1,8 @@
+overwrite: true
+schema: "https://scatter-seed-api.herokuapp.com/graphql"
+generates:
+  src/@generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
