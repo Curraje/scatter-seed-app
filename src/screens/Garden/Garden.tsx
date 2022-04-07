@@ -10,14 +10,14 @@ import Testc from "../../components/GestureTest";
 type GardenPageProps = Navigation.AppTabsPageProps<"Garden">;
 
 export default function GardenPage({ route, navigation }: GardenPageProps) {
-
-
   // THIS IS HOW YOU SEND PARAMS IN TYPESCRIPT
-  const params = route.params ?? {sentGarden: false, gardenData: 1, targetGarden: 0};
-  const sentGarden = params.sentGarden;
+  const params =
+    (route.params as any) ??
+    ({ isGardenSent: false, gardenSize: 1, gardenData: null, targetGarden: 0 } as any);
+  const sentGarden = params.isGardenSent;
+  const gardenSize = params.gardenSize;
   const gardenData = params.gardenData;
   const targetGarden = params.targetGarden;
-
 
   const onPressHandler = () => {
     navigation.navigate("Home");
@@ -33,8 +33,6 @@ export default function GardenPage({ route, navigation }: GardenPageProps) {
     return unsubscribe;
   }, [navigation]);//*/
 
-  
-
   return (
     <View style={GardenStyles.body}>
       <Text>Garden</Text>
@@ -43,9 +41,14 @@ export default function GardenPage({ route, navigation }: GardenPageProps) {
         onPress={onPressHandler}
         style={({ pressed }) => ({ backgroundColor: pressed ? "#555" : "#ddd" })}
       >
-        <Text style={styles.text}>Home</Text> 
+        <Text style={styles.text}>Home</Text>
       </Pressable>
-      <GardenPlanner dim={gardenData} sentValid={sentGarden} targetGarden={targetGarden}/>
+      <GardenPlanner
+        dim={gardenSize}
+        sentValid={sentGarden}
+        targetGarden={targetGarden}
+        gardenData={gardenData}
+      />
     </View>
   );
 }

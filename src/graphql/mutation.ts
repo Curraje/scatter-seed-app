@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 //maybe change user later
 export const CREATE_GARDEN = gql`
-mutation CreateGarden($name: String!, $height: Float!, $width: Float!) {
+  mutation CreateGarden($name: String!, $height: Float!, $width: Float!) {
     createGarden(
       data: {
         name: $name
@@ -10,11 +10,25 @@ mutation CreateGarden($name: String!, $height: Float!, $width: Float!) {
         width: $width
         user: { connect: { username: "alicethebest" } }
       }
-    ) 
-    {
+    ) {
+      id
+      name
+      width
+      height
+      beds {
         id
+        coord_x
+        coord_y
         name
-        width
         height
+        width
+        notes
+        plants {
+          plant {
+            CommonName
+          }
+        }
+      }
     }
-}`;
+  }
+`;

@@ -1,12 +1,13 @@
 declare namespace Navigation {
   export declare type AppTabsParamList = {
-    Home: unknown;
-    Weather: unknown;
-    Calendar: unknown;
-    Garden: unknown;
-    Settings: unknown;
-    Login: unknown;
-    Register: unknown;
+    Home: unknown | undefined;
+    Weather: unknown | undefined;
+    Calendar: unknown | undefined;
+    Garden: unknown | undefined;
+    Settings: unknown | undefined;
+    Login: unknown | undefined;
+    Register: unknown | undefined;
+    Tasks: unknown | undefined;
   };
 
   export declare type AppTabsPageProps<T extends keyof AppTabsParamList> =

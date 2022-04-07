@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Modal, Pressable, Text, View, TextInput } from "react-native";
 import { Button } from "react-native-paper";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./home.styles";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { CREATE_GARDEN } from "../../graphql/mutation";
-
-
-
+import {
+  CreateGardenMutation,
+  CreateGardenMutationVariables,
+  GetUserGardensQuery,
+} from "../../@generated/graphql";
+import { GET_USER_GARDENS } from "../../graphql/queries";
 
 type HomePageProps = Navigation.AppTabsPageProps<"Home">;
 
-export default function HomePage({ navigation }: any ) {
-
+export default function HomePage({ navigation }: HomePageProps) {
   const signedIn = true;
   const gardensExist = true;
   const [createSize, setCreateSize] = React.useState(10);
@@ -24,29 +26,38 @@ export default function HomePage({ navigation }: any ) {
   const [modalSelectVisible, setModalSelectVisible] = useState(false);
   const [modalCreateVisible, setModalCreateVisible] = useState(false);
 
-  const [createGarden,{data:cgData, loading:cgLoading, error:cgError}] = useMutation(CREATE_GARDEN);
+  const [createGarden, { data: cgData, loading: cgLoading, error: cgError }] = useMutation<
+    CreateGardenMutation,
+    CreateGardenMutationVariables
+  >(CREATE_GARDEN);
 
-  
+  const {
+    data: ugData,
+    loading: ugLoading,
+    error: ugError,
+  } = useQuery<GetUserGardensQuery>(GET_USER_GARDENS);
 
+  useEffect(() => {
+    console.log("LOADING USER GARDEN DATA", ugLoading);
+    console.log("ERROR LOADING USER GARDEN DATA", ugError);
+    if (!ugLoading) console.log("USER GARDEN DATA", ugData);
+  }, [ugData, ugLoading, ugError]);
 
-
-  const onChangeTextInput = (text:string) => {
+  const onChangeTextInput = (text: string) => {
     const numericRegex = /^([0-9]{1,100})+$/;
-    if(numericRegex.test(text)) {
+    if (numericRegex.test(text)) {
       //this.setState({ shippingCharge: text })
       setCreateSize(parseInt(text));
-    }else if(text == ""){
+    } else if (text == "") {
       setCreateSize(0);
     }
   };
 
- 
-
   //navigate to the garden
   const selectGardenModalHandler = () => {
-    if(gardensExist){
+    if (gardensExist) {
       switchSelectModal();
-    }else{
+    } else {
       switchSelectModal();
       createGardenModalHandler();
     }
@@ -54,25 +65,27 @@ export default function HomePage({ navigation }: any ) {
 
   const createGardenModalHandler = () => {
     //if not signed in
-    if(!signedIn){
+    if (!signedIn) {
       loginHandler();
-    }else{
+    } else {
       switchCreateModal();
       //open modal for crteating a garden
     }
   };
-  
+
   const generateGardenHandler = async () => {
     //if not signed in
-    if(createSize > 0){
+    if (createSize > 0) {
       switchCreateModal();
       //add garden to database
-      await createGarden({variables: {
-        name: createName,
-        width: createSize,
-        height: createSize,
-      }});
-      setTargetGarden(cgData.createGarden.id);
+      await createGarden({
+        variables: {
+          name: createName,
+          width: createSize,
+          height: createSize,
+        },
+      });
+      setTargetGarden(cgData?.createGarden.id ?? 1);
       //
       openGarden();
     }
@@ -81,9 +94,14 @@ export default function HomePage({ navigation }: any ) {
     switchCreateModal();
     openGarden();
   };
+
   const openGarden = () => {
     //go to garden based on garden id
-    navigation.navigate("Garden", {sentGarden: true, gardenData: createSize, targetGarden: targetGarden});
+    navigation.navigate("Garden", {
+      isGardenSent: true,
+      gardenSize: createSize,
+      gardenData: cgData?.createGarden,
+    });
   };
 
   //navigate to the tasks page
@@ -128,90 +146,80 @@ export default function HomePage({ navigation }: any ) {
         <View style={GlobalStyles.modal}>
           <Text>create yo shit</Text>
           <TextInput
-            underlineColorAndroid='transparent'
-            placeholder='0.00'
+            underlineColorAndroid="transparent"
+            placeholder="0.00"
             keyboardType={"numeric"}
             value={createSize.toString()}
             onChangeText={onChangeTextInput}
           />
-          <Button 
-            style={styles.button}  
+          <Button
+            style={styles.button}
             icon={() => (
               <FontAwesome5
                 name={"border-all"}
                 style={{ width: 15, height: 15, tintColor: "green" }}
               />
-            )}  
-            mode="contained" 
+            )}
+            mode="contained"
             onPress={async () => await generateGardenHandler()}
-          >hello</Button>
+          >
+            hello
+          </Button>
         </View>
       </Modal>
-      
 
-      <FontAwesome5
-        name={"envira"}
-        size={150}
-        color={"#85e085"}
-      />
+      <FontAwesome5 name={"envira"} size={150} color={"#85e085"} />
       <Text style={styles.headerText}>Welcome to the ScatterSeed</Text>
-      
 
-      <Button 
-        style={styles.button}  
+      <Button
+        style={styles.button}
         icon={() => (
-          <FontAwesome5
-            name={"border-all"}
-            style={{ width: 15, height: 15, tintColor: "green" }}
-          />
-        )}  
-        mode="contained" 
+          <FontAwesome5 name={"border-all"} style={{ width: 15, height: 15, tintColor: "green" }} />
+        )}
+        mode="contained"
         onPress={selectGardenModalHandler}
       >
         Go To Garden
       </Button>
-      <Button 
+      <Button
         style={styles.button}
         icon={() => (
           <FontAwesome5
             name={"border-none"}
             style={{ width: 15, height: 15, tintColor: "green" }}
           />
-        )} 
-        mode="contained" 
+        )}
+        mode="contained"
         onPress={createGardenModalHandler}
       >
         Create Garden (Go to login)
       </Button>
-      <Button 
+      <Button
         icon={() => (
-          <FontAwesome5
-            name={"align-left"}
-            style={{ width: 15, height: 15, tintColor: "green" }}
-          />
-        )} 
-        style={styles.button} 
-        mode="contained" 
+          <FontAwesome5 name={"align-left"} style={{ width: 15, height: 15, tintColor: "green" }} />
+        )}
+        style={styles.button}
+        mode="contained"
         onPress={() => console.log("Pressed")}
       >
         Monthly Tasks
       </Button>
-      <Button 
+      <Button
         icon={() => (
           <FontAwesome5
             name={"calendar-check"}
             style={{ width: 15, height: 15, tintColor: "green" }}
           />
-        )}  
+        )}
         style={styles.button}
-        mode="contained" 
+        mode="contained"
         onPress={tasksHandler}
       >
         All Tasks
       </Button>
 
       <Text style={styles.subheader}>Upcoming Chores</Text>
-      
+
       <View style={styles.choreBlock}>
         <Text style={styles.chore}>Task 1 - Due March 15, 2022</Text>
         <Text style={styles.chore}>Task 2 - Due Smarch 11, 2023</Text>
