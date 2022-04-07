@@ -35,15 +35,55 @@ export const CREATE_GARDEN = gql`
   }
 `;
 
-export const UPDATE_BED = gql`
-  mutation UpdateBed(
-    $id: Int!
+export const CREATE_BED = gql`
+  mutation CreateBed(
+    $garden_id: Int!
     $name: String!
     $x1: Float!
     $y1: Float!
     $x2: Float!
     $y2: Float!
+    $notes: String!
+  ) {
+    createBed(
+      data: {
+        name: $name
+        coord_x: $x1
+        coord_y: $y1
+        width: $x2
+        height: $y2
+        garden: { connect: { id: $garden_id } }
+        notes: $notes
+      }
+    ) {
+      id
+      name
+      coord_x
+      coord_y
+      height
+      width
+      plants {
+        id
+        plant {
+          id
+        }
+      }
+      gardenId
+      notes
+    }
+  }
+`;
+
+export const UPDATE_BED = gql`
+  mutation UpdateBed(
+    $id: Int!
+    $name: StringFieldUpdateOperationsInput!
+    $x1: FloatFieldUpdateOperationsInput!
+    $y1: FloatFieldUpdateOperationsInput!
+    $x2: FloatFieldUpdateOperationsInput!
+    $y2: FloatFieldUpdateOperationsInput!
     $plant_id: Int!
+    $notes: StringFieldUpdateOperationsInput!
   ) {
     updateBed(
       where: { id: $id }
@@ -59,6 +99,7 @@ export const UPDATE_BED = gql`
             create: { plant: { connect: { id: $plant_id } } }
           }
         }
+        notes: $notes
       }
     ) {
       id
@@ -69,6 +110,7 @@ export const UPDATE_BED = gql`
       width
       updatedAt
       plants {
+        id
         plant {
           id
           CommonName
@@ -92,6 +134,7 @@ export const UPDATE_BED = gql`
           SowOutdoors
         }
       }
+      notes
     }
   }
 `;
@@ -105,6 +148,7 @@ export const UPDATE_BED_REPLACE_PLANT = gql`
     $x2: FloatFieldUpdateOperationsInput!
     $y2: FloatFieldUpdateOperationsInput!
     $plant_id: Int!
+    $notes: StringFieldUpdateOperationsInput!
   ) {
     updateBed(
       where: { id: $id }
@@ -115,6 +159,7 @@ export const UPDATE_BED_REPLACE_PLANT = gql`
         width: $x2
         height: $y2
         plants: { set: { bedId_plantId: { bedId: $id, plantId: $plant_id } } }
+        notes: $notes
       }
     ) {
       id
@@ -125,6 +170,7 @@ export const UPDATE_BED_REPLACE_PLANT = gql`
       width
       updatedAt
       plants {
+        id
         plant {
           id
           CommonName
@@ -148,6 +194,17 @@ export const UPDATE_BED_REPLACE_PLANT = gql`
           SowOutdoors
         }
       }
+      notes
+    }
+  }
+`;
+
+export const DELETE_BED = gql`
+  mutation DeleteBed($id: Int!) {
+    deleteBed(where: { id: $id }) {
+      id
+      name
+      gardenId
     }
   }
 `;
