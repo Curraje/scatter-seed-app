@@ -73,90 +73,99 @@ export default function WeatherPage({ navigation }: WeatherPageProps) {
   let forecastData = data?.weather_forecast;
   console.log(forecastData);
   // const iconUri = "https:" + forecastData.current.icon;
-  return (
-    <View style={GlobalStyles.body}>
-      <View style={styles.container}>
+
+  if (loading === true) {
+    return <View><Text>Loading...</Text></View>;
+  }
+  else
+  {
+
+    return (
+      <View style={GlobalStyles.body}>
+        <View style={styles.container}>
         
 
-        <Text style={styles.headerText}>{forecastData.location.name} - {forecastData.location.country}</Text>
-        <Text>{forecastData.location.localtime} - {forecastData.location.tz_id}</Text>
-        <View style={styles.weatherTop}>
-          <View style={styles.iconTemp}>
-            <Image 
-              style={styles.weatherLogo}
-              source={{uri:  "https:"+forecastData.current.condition.icon}}
-            /> 
-            <Text style={styles.degreesHeader}>{forecastData.current.temp_c} *C</Text>
+          <Text style={styles.headerText}>{forecastData.location.name} - {forecastData.location.country}</Text>
+          <Text>{forecastData.location.localtime} - {forecastData.location.tz_id}</Text>
+          <View style={styles.weatherTop}>
+            <View style={styles.iconTemp}>
+              <Image 
+                style={styles.weatherLogo}
+                source={{uri:  "https:"+forecastData.current.condition.icon}}
+              /> 
+              <Text style={styles.degreesHeader}>{forecastData.current.temp_c} *C</Text>
+            </View>
+            <View style={styles.topWeatherDetails}>
+              <View>
+                <Text>Feels Like:</Text>
+                <Text>{forecastData.current.feelslike_c}*C</Text>
+              </View>
+              <View>
+                <Text>Wind:</Text>
+                <Text>{forecastData.current.wind_kph}</Text>
+              </View>
+              <View>
+                <Text>Gust:</Text>
+                <Text>{forecastData.current.gust_kph}</Text>
+              </View>
+              <View>
+                <Text>Sun/Moon Icon:</Text>
+                <Text>{forecastData.current.is_day}</Text>
+              </View>
+            
+            
+            
+            </View>
           </View>
-          <View style={styles.topWeatherDetails}>
-            <View>
-              <Text>Feels Like:</Text>
-              <Text>{forecastData.current.feelslike_c}*C</Text>
-            </View>
-            <View>
-              <Text>Wind:</Text>
-              <Text>{forecastData.current.wind_kph}</Text>
-            </View>
-            <View>
-              <Text>Gust:</Text>
-              <Text>{forecastData.current.gust_kph}</Text>
-            </View>
-            <View>
-              <Text>Sun/Moon Icon:</Text>
-              <Text>{forecastData.current.is_day}</Text>
-            </View>
-            
-            
-            
-          </View>
-        </View>
 
-        <View style={styles.weatherBottom}> 
-          <Text style={styles.text}> Last Updated: {forecastData.current.last_updated}</Text>
-          <View style={styles.bottomWeatherDetails}>
-            <View style={styles.rowView}>
-              <View>
-                <Text>Wind Direction</Text>
-                <Text style={styles.text}>{forecastData.current.wind_dir}</Text>
+          <View style={styles.weatherBottom}> 
+            <Text style={styles.text}> Last Updated: {forecastData.current.last_updated}</Text>
+            <View style={styles.bottomWeatherDetails}>
+              <View style={styles.rowView}>
+                <View>
+                  <Text>Wind Direction</Text>
+                  <Text style={styles.text}>{forecastData.current.wind_dir}</Text>
+                </View>
+                <View>
+                  <Text>Ceiling</Text>
+                  <Text style={styles.text}>{forecastData.current.cloud}m</Text>
+                </View>
+                <View>
+                  <Text>Expected Rain</Text>
+                  <Text style={styles.text}>{forecastData.current.precip_mm}mm</Text>
+                </View>
               </View>
-              <View>
-                <Text>Ceiling</Text>
-                <Text style={styles.text}>{forecastData.current.cloud}m</Text>
+              <View style={styles.rowView}>
+                <View>
+                  <Text>Humidity</Text>
+                  <Text style={styles.text}>{forecastData.current.humidity}</Text>
+                </View>
+                <View>
+                  <Text>Visibility</Text>
+                  <Text style={styles.text}>{forecastData.current.vis_km}km</Text>
+                </View>
+                <View>
+                  <Text>UV Index</Text>
+                  <Text style={styles.text}>{forecastData.current.uv}</Text>
+                </View>
+                <View>
+                  <Text>Pressure</Text>
+                  <Text style={styles.text}>{forecastData.current.pressure_mb}mb</Text>
+                </View>
               </View>
-              <View>
-                <Text>Expected Rain</Text>
-                <Text style={styles.text}>{forecastData.current.precip_mm}mm</Text>
-              </View>
+            
+            
+            
+            
+            
+            
+            
             </View>
-            <View style={styles.rowView}>
-              <View>
-                <Text>Humidity</Text>
-                <Text style={styles.text}>{forecastData.current.humidity}</Text>
-              </View>
-              <View>
-                <Text>Visibility</Text>
-                <Text style={styles.text}>{forecastData.current.vis_km}km</Text>
-              </View>
-              <View>
-                <Text>UV Index</Text>
-                <Text style={styles.text}>{forecastData.current.uv}</Text>
-              </View>
-              <View>
-                <Text>Pressure</Text>
-                <Text style={styles.text}>{forecastData.current.pressure_mb}mb</Text>
-              </View>
-            </View>
-            
-            
-            
-            
-            
-            
-            
-          </View>
-        </View> 
-      </View>
-    </View> 
+          </View> 
+        </View>
+      </View> 
     
-  );
+    );
+
+  }
 }
