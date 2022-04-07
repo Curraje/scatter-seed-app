@@ -13,9 +13,10 @@ export default function GardenPage({ route, navigation }: GardenPageProps) {
 
 
   // THIS IS HOW YOU SEND PARAMS IN TYPESCRIPT
-  const params = route.params ?? {sentGarden: false, gardenData: 1};
+  const params = route.params ?? {sentGarden: false, gardenData: 1, targetGarden: 0};
   const sentGarden = params.sentGarden;
   const gardenData = params.gardenData;
+  const targetGarden = params.targetGarden;
 
 
   const onPressHandler = () => {
@@ -44,7 +45,7 @@ export default function GardenPage({ route, navigation }: GardenPageProps) {
       >
         <Text style={styles.text}>Home</Text> 
       </Pressable>
-      <GardenPlanner dim={gardenData} sentValid={sentGarden}/>
+      <GardenPlanner dim={gardenData} sentValid={sentGarden} targetGarden={targetGarden}/>
     </View>
   );
 }

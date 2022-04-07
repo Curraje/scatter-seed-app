@@ -52,7 +52,7 @@ class GardenPlanner extends Component {
   setBedNotes = (visible) => {
     this.setState({ bedNotes: visible });
   };
-  //holy fuck i think it works now
+
   componentDidUpdate(prevProps, prevState) {
     if(divisor != this.props.dim){
       this.beds = [];
@@ -346,6 +346,6 @@ const styles = StyleSheet.create({
   },
   inputTall: {
     width: "85%",
-    height: "50%",
+    
   },
 });

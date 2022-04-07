@@ -5,6 +5,10 @@ import { Button } from "react-native-paper";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./home.styles";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { gql, useMutation } from "@apollo/client";
+import { CREATE_GARDEN } from "../../graphql/mutation";
+
+
 
 
 type HomePageProps = Navigation.AppTabsPageProps<"Home">;
@@ -15,7 +19,16 @@ export default function HomePage({ navigation }: any ) {
   const gardensExist = true;
   const [createSize, setCreateSize] = React.useState(10);
   const [createName, setCreateName] = React.useState("new garden");
-  //const [targetGarden, setTargetGarden] = React.useState(id?);
+  const [targetGarden, setTargetGarden] = React.useState(0);
+
+  const [modalSelectVisible, setModalSelectVisible] = useState(false);
+  const [modalCreateVisible, setModalCreateVisible] = useState(false);
+
+  const [createGarden,{data:cgData, loading:cgLoading, error:cgError}] = useMutation(CREATE_GARDEN);
+
+  
+
+
 
   const onChangeTextInput = (text:string) => {
     const numericRegex = /^([0-9]{1,100})+$/;
@@ -27,8 +40,7 @@ export default function HomePage({ navigation }: any ) {
     }
   };
 
-  const [modalSelectVisible, setModalSelectVisible] = useState(false);
-  const [modalCreateVisible, setModalCreateVisible] = useState(false);
+ 
 
   //navigate to the garden
   const selectGardenModalHandler = () => {
@@ -50,10 +62,18 @@ export default function HomePage({ navigation }: any ) {
     }
   };
   
-  const generateGardenHandler = () => {
+  const generateGardenHandler = async () => {
     //if not signed in
     if(createSize > 0){
       switchCreateModal();
+      //add garden to database
+      await createGarden({variables: {
+        name: createName,
+        width: createSize,
+        height: createSize,
+      }});
+      setTargetGarden(cgData.createGarden.id);
+      //
       openGarden();
     }
   };
@@ -62,7 +82,8 @@ export default function HomePage({ navigation }: any ) {
     openGarden();
   };
   const openGarden = () => {
-    navigation.navigate("Garden", {sentGarden: true, gardenData: createSize});
+    //go to garden based on garden id
+    navigation.navigate("Garden", {sentGarden: true, gardenData: createSize, targetGarden: targetGarden});
   };
 
   //navigate to the tasks page
@@ -122,7 +143,7 @@ export default function HomePage({ navigation }: any ) {
               />
             )}  
             mode="contained" 
-            onPress={generateGardenHandler}
+            onPress={async () => await generateGardenHandler()}
           >hello</Button>
         </View>
       </Modal>
