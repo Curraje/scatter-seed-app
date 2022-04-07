@@ -22,7 +22,7 @@ const PLANTS_QUERY = gql`
       BloomTime
       SeedDepth
       SproutsIn
-      IdealTemp
+      MinIdealTemp
       PlantSpacing
       FrostHardy
       MinFullSun
