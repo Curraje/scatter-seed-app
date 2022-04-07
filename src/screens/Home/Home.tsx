@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Modal, Pressable, Text, View } from "react-native";
+import { Modal, Pressable, Text, View, TextInput } from "react-native";
 import { Button } from "react-native-paper";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./home.styles";
@@ -13,22 +13,34 @@ export default function HomePage({ navigation }: any ) {
 
   const signedIn = true;
   const gardensExist = true;
+  const [createSize, setCreateSize] = React.useState(10);
+  const [createName, setCreateName] = React.useState("new garden");
+  //const [targetGarden, setTargetGarden] = React.useState(id?);
 
-
-  const [modalSelectVisible, setModalSelectVisible] = useState(false);
-  const [modalCreateVisible, setModalCreateVisible] = useState(false);
-  //navigate to the garden
-  const selectGardenHandler = () => {
-    if(gardensExist){
-      //use selected garden
-      //switchSelectModal();
-      gardenHandler(5);
-    }else{
-      createGardenHandler();
+  const onChangeTextInput = (text:string) => {
+    const numericRegex = /^([0-9]{1,100})+$/;
+    if(numericRegex.test(text)) {
+      //this.setState({ shippingCharge: text })
+      setCreateSize(parseInt(text));
+    }else if(text == ""){
+      setCreateSize(0);
     }
   };
 
-  const createGardenHandler = () => {
+  const [modalSelectVisible, setModalSelectVisible] = useState(false);
+  const [modalCreateVisible, setModalCreateVisible] = useState(false);
+
+  //navigate to the garden
+  const selectGardenModalHandler = () => {
+    if(gardensExist){
+      switchSelectModal();
+    }else{
+      switchSelectModal();
+      createGardenModalHandler();
+    }
+  };
+
+  const createGardenModalHandler = () => {
     //if not signed in
     if(!signedIn){
       loginHandler();
@@ -37,10 +49,22 @@ export default function HomePage({ navigation }: any ) {
       //open modal for crteating a garden
     }
   };
-
-  const gardenHandler = (size: number) => {
-    navigation.navigate("Garden", {sentGarden: true, gardenData: size});
+  
+  const generateGardenHandler = () => {
+    //if not signed in
+    if(createSize > 0){
+      switchCreateModal();
+      openGarden();
+    }
   };
+  const selectGardenHandler = () => {
+    switchCreateModal();
+    openGarden();
+  };
+  const openGarden = () => {
+    navigation.navigate("Garden", {sentGarden: true, gardenData: createSize});
+  };
+
   //navigate to the tasks page
   const tasksHandler = () => {
     navigation.navigate("Tasks");
@@ -82,6 +106,24 @@ export default function HomePage({ navigation }: any ) {
       >
         <View style={GlobalStyles.modal}>
           <Text>create yo shit</Text>
+          <TextInput
+            underlineColorAndroid='transparent'
+            placeholder='0.00'
+            keyboardType={"numeric"}
+            value={createSize.toString()}
+            onChangeText={onChangeTextInput}
+          />
+          <Button 
+            style={styles.button}  
+            icon={() => (
+              <FontAwesome5
+                name={"border-all"}
+                style={{ width: 15, height: 15, tintColor: "green" }}
+              />
+            )}  
+            mode="contained" 
+            onPress={generateGardenHandler}
+          >hello</Button>
         </View>
       </Modal>
       
@@ -103,7 +145,7 @@ export default function HomePage({ navigation }: any ) {
           />
         )}  
         mode="contained" 
-        onPress={selectGardenHandler}
+        onPress={selectGardenModalHandler}
       >
         Go To Garden
       </Button>
@@ -116,7 +158,7 @@ export default function HomePage({ navigation }: any ) {
           />
         )} 
         mode="contained" 
-        onPress={createGardenHandler}
+        onPress={createGardenModalHandler}
       >
         Create Garden (Go to login)
       </Button>
