@@ -21,6 +21,9 @@ import {
 import { Button, TextInput } from "react-native-paper";
 import { Dimensions } from "react-native";
 import GardenBed from "../classes/GardenBed";
+import { client as apolloClient } from "../App";
+import { GET_USER_GARDENS } from "../graphql/queries";
+import { UPDATE_BED_WITHOUT_PLANT } from "../graphql/mutation";
 
 //size of the element
 const WSIZE = Dimensions.get("window").width;
@@ -70,8 +73,8 @@ class GardenPlanner extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.initBeds();
     if (divisor != this.props.dim || this.targetGarden !== this.props.targetGarden) {
+      this.initBeds();
       divisor = this.props.dim;
       square = WSIZE / divisor;
       ctx.clearRect(0, 0, WSIZE, WSIZE);
