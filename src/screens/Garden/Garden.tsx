@@ -10,7 +10,7 @@ import Testc from "../../components/GestureTest";
 type GardenPageProps = Navigation.AppTabsPageProps<"Garden">;
 
 export default function GardenPage({ route, navigation }: GardenPageProps) {
-  // THIS IS HOW YOU SEND PARAMS IN TYPESCRIPT
+//params
   const params =
     (route.params as any) ??
     ({ isGardenSent: false, gardenSize: 1, gardenData: null, targetGarden: 0 } as any);

@@ -30,8 +30,9 @@ class GardenPlanner extends Component {
   BedY=1;
   
   //stores existing beds
+  garden;
   beds = [];
-  TargetBed;
+  targetGarden = -1;
 
   state = {
     addNewVisible: false,
@@ -53,14 +54,28 @@ class GardenPlanner extends Component {
     this.setState({ bedNotes: visible });
   };
 
+  componentDidMount() {
+    this.initBeds();
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if(divisor != this.props.dim){
-      this.beds = [];
+    //if(divisor != this.props.dim){
+    if(divisor != this.props.dim || this.targetGarden !== this.props.targetGarden){
+      this.initBeds();
       divisor = this.props.dim;
       square = WSIZE/divisor;
       ctx.clearRect(0, 0, WSIZE, WSIZE);
       this.CanvasNew();
     }
+  }
+
+  initBeds() {
+    this.beds = this.props.gardenData?.beds ? this.props.gardenData.beds.map((bed) => {
+      // HACK: bed.coord_x => x1, bed.coord_y, bed.width => x2, bed.height => y2
+      return new GardenBed(bed.coord_x, bed.coord_y, bed.width, bed.height, bed.name)
+    }) : [];
+    console.log(`GARDEN DATA`, this.props.gardenData);
+    console.log(`BEDS ARRAY`, this.beds);
   }
   handleCanvas = (canvas) => {
     divisor = this.props.dim;
