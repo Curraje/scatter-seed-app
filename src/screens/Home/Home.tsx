@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Modal, Pressable, Text, View, TextInput } from "react-native";
+import { Modal, Pressable, Text, View, TextInput, FlatList, ScrollView } from "react-native";
 import { Button } from "react-native-paper";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./home.styles";
@@ -20,6 +20,7 @@ export default function HomePage({ navigation }: HomePageProps) {
   const signedIn = true;
   const gardensExist = true;
   const [createSize, setCreateSize] = React.useState(10);
+  const [createCount, setCreateCount] = React.useState(0);
   const [createName, setCreateName] = React.useState("new garden");
   const [targetGarden, setTargetGarden] = React.useState(0);
 
@@ -29,7 +30,7 @@ export default function HomePage({ navigation }: HomePageProps) {
   const [createGarden, { data: cgData, loading: cgLoading, error: cgError }] = useMutation<
     CreateGardenMutation,
     CreateGardenMutationVariables
-  >(CREATE_GARDEN);
+  >(CREATE_GARDEN, {refetchQueries:[GET_USER_GARDENS]});
 
   const {
     data: ugData,
@@ -87,11 +88,12 @@ export default function HomePage({ navigation }: HomePageProps) {
       });
       setTargetGarden(cgData?.createGarden.id ?? 1);
       //
+      setCreateCount(createCount+1);
       openGarden();
     }
   };
   const selectGardenHandler = () => {
-    switchCreateModal();
+    switchSelectModal();
     openGarden();
   };
 
@@ -132,7 +134,22 @@ export default function HomePage({ navigation }: HomePageProps) {
         }}
       >
         <View style={GlobalStyles.modal}>
-          <Text>select yo shit</Text>
+          <FlatList
+            data={ugData?.user?.gardens}
+            renderItem={({ item }) => (
+              <View>
+                <Button
+                  style={styles.button}
+                  mode="contained"
+                  onPress={selectGardenHandler}
+                >
+                  {`${item.name} ${item.id}, ${item.width}`}
+                </Button>
+              </View>
+            )}
+            ListEmptyComponent={!ugLoading ? <View><Text>Loading Gardens...</Text></View> : <View><Text>No Gardens Available!</Text></View>}
+            // keyExtractor={(item) => item.id}
+          />
         </View>
       </Modal>
       <Modal
