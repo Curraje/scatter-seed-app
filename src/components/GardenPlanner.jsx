@@ -23,7 +23,7 @@ import { Dimensions } from "react-native";
 import GardenBed from "../classes/GardenBed";
 import { client as apolloClient } from "../App";
 import { GET_USER_GARDENS } from "../graphql/queries";
-import { UPDATE_BED_WITHOUT_PLANT } from "../graphql/mutation";
+import { CREATE_BED, DELETE_BED, UPDATE_BED_WITHOUT_PLANT } from "../graphql/mutation";
 
 //size of the element
 const WSIZE = Dimensions.get("window").width;
@@ -33,6 +33,7 @@ var targetGarden = -1;
 
 var square = WSIZE / divisor;
 var ModalLocation;
+var TargetBed;
 
 class GardenPlanner extends Component {
   //stores canvas context
@@ -56,6 +57,78 @@ class GardenPlanner extends Component {
     bedNotes: "",
     //plant variety
   };
+
+  // constructor( props ){
+  //   super( props );
+  //   this.editBedName = this.editBedName.bind(this);
+  //   this.editBedNotes = this.editBedNotes.bind(this);
+  // }
+
+  updateBackend(bed) {
+    apolloClient
+      .mutate({
+        mutation: UPDATE_BED_WITHOUT_PLANT,
+        refetchQueries: [GET_USER_GARDENS],
+        variables: {
+          id: bed.id,
+          x1: { set: bed.leftX },
+          x2: { set: bed.rightX },
+          y1: { set: bed.topY },
+          y2: { set: bed.bottomY },
+          name: { set: bed.name },
+          notes: { set: bed.notes },
+        },
+      })
+      .then((res) => {
+        console.log("UPDATED A BED", res.data);
+      })
+      .catch((err) => {
+        console.log(`COULD NOT UPDATE BED ${bed.id}`, JSON.stringify(err, null, 2));
+      });
+  }
+
+  deleteBackend(bed) {
+    apolloClient
+      .mutate({
+        mutation: DELETE_BED,
+        refetchQueries: [GET_USER_GARDENS],
+        variables: {
+          id: bed.id,
+        },
+      })
+      .then((res) => {
+        console.log(`DELETED BED: ${bed.id}`, res.data);
+      })
+      .catch((err) => {
+        console.log("COULD NOT DELETE BED", JSON.stringify(err, null, 2));
+      });
+  }
+
+  createBackend(bed) {
+    console.log("QUERYING WITH BED", bed);
+    const res = apolloClient
+      .mutate({
+        mutation: CREATE_BED,
+        refetchQueries: [GET_USER_GARDENS],
+        variables: {
+          garden_id: this.props.targetGarden,
+          name: bed.name,
+          x1: bed.leftX,
+          x2: bed.rightX,
+          y1: bed.topY,
+          y2: bed.bottomY,
+          notes: bed.notes,
+        },
+      })
+      .then((res) => {
+        bed.id = res.data.createBed.id;
+        console.log(`CREATED BED: ${bed.id}`, JSON.stringify(res.data, null, 2));
+      })
+      .catch((err) => {
+        console.log("COULD NOT CREATE BED", JSON.stringify(err, null, 2));
+      });
+  }
+
   setaddNewVisible = (visible) => {
     this.setState({ addNewVisible: visible });
   };
@@ -65,13 +138,15 @@ class GardenPlanner extends Component {
   setBedName = (text) => {
     this.setState({ bedName: text });
   };
-  setBedNotes = (visible) => {
-    this.setState({ bedNotes: visible });
-    // apolloClient.mutate({
-    //   mutation: UPDATE_BED_WITHOUT_PLANT,
-    //   refetchQueries: [GET_USER_GARDENS]
-    // })
+  setBedNotes = (notes) => {
+    this.setState({ bedNotes: notes });
   };
+
+  editBedNotes(text) {
+    this.setBedNotes(text);
+    TargetBed.notes = text;
+    this.updateBackend(TargetBed);
+  }
 
   componentDidMount() {
     this.initBeds();
@@ -92,7 +167,7 @@ class GardenPlanner extends Component {
     this.beds = this.props.gardenData?.beds
       ? this.props.gardenData.beds.map((bed) => {
           // HACK: bed.coord_x => x1, bed.coord_y, bed.width => x2, bed.height => y2
-          return new GardenBed(bed.coord_x, bed.coord_y, bed.width, bed.height, bed.name);
+          return new GardenBed(bed.coord_x, bed.coord_y, bed.width, bed.height, bed.name, bed.id);
         })
       : [];
     console.log("GARDEN DATA", this.props.gardenData);
@@ -179,6 +254,8 @@ class GardenPlanner extends Component {
     var y = Math.floor(evt.nativeEvent.locationY / square);
     var bed = new GardenBed(TargetX, TargetY, x, y, "");
 
+    this.createBackend(bed);
+
     if (this.beds.length > 0) {
       var i = 0;
       while (i < this.beds.length && !this.beds[i].doesIntersect(bed)) {
@@ -206,6 +283,7 @@ class GardenPlanner extends Component {
     }
     this.CanvasNew();
     this.CloseEdit();
+    this.deleteBackend(bed);
   }
 
   ClosePrompt() {
@@ -217,7 +295,9 @@ class GardenPlanner extends Component {
 
   editBedName(text) {
     TargetBed.name = text;
-    this.setBedName(TargetBed.name);
+    this.setBedName(text);
+    // bed.name = text;
+    this.updateBackend(TargetBed);
   }
   editTargetY(text) {
     TargetY = parseInt(text);
@@ -301,6 +381,8 @@ class GardenPlanner extends Component {
                   label="Notes"
                   style={styles.inputTall}
                   multiline={true}
+                  value={bedNotes}
+                  onChangeText={(text) => this.editBedNotes(text)}
                 />
 
                 <Button

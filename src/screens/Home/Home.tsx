@@ -150,7 +150,7 @@ export default function HomePage({ navigation }: HomePageProps) {
             renderItem={({ item }) => (
               <View>
                 <Button
-                  style={styles.button}
+                  style={{ ...styles.button, width: "90%" }}
                   mode="contained"
                   onPress={() => {
                     selectGardenHandler(item);
@@ -161,7 +161,7 @@ export default function HomePage({ navigation }: HomePageProps) {
               </View>
             )}
             ListEmptyComponent={
-              !ugLoading ? (
+              ugLoading ? (
                 <View>
                   <Text>Loading Gardens...</Text>
                 </View>
@@ -173,6 +173,14 @@ export default function HomePage({ navigation }: HomePageProps) {
             }
             keyExtractor={(item) => item.id.toString()}
           />
+          <Button
+            // style={styles.button}
+            // icon={() => <FontAwesome5 name={"border-all"} style={{ width: 15, height: 15 }} />}
+            mode="contained"
+            onPress={() => switchSelectModal()}
+          >
+            Close
+          </Button>
         </View>
       </Modal>
       <Modal
@@ -202,6 +210,14 @@ export default function HomePage({ navigation }: HomePageProps) {
             onPress={async () => await generateGardenHandler()}
           >
             Start Garden
+          </Button>
+          <Button
+            // style={styles.button}
+            // icon={() => <FontAwesome5 name={"border-all"} style={{ width: 15, height: 15 }} />}
+            mode="contained"
+            onPress={() => switchCreateModal()}
+          >
+            Close
           </Button>
         </View>
       </Modal>
