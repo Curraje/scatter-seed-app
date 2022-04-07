@@ -94,8 +94,6 @@ export default function HomePage({ navigation }: HomePageProps) {
   };
   const selectGardenHandler = (item: any) => {
     switchSelectModal();
-    setTargetGarden(item.id);
-    setCreateSize(item.height);
     openGarden(item);
   };
 
@@ -103,9 +101,9 @@ export default function HomePage({ navigation }: HomePageProps) {
     //go to garden based on garden id
     navigation.navigate("Garden", {
       isGardenSent: true,
-      gardenSize: createSize,
-      gardenData: data?.createGarden,
-      targetGarden: targetGarden,
+      gardenSize: data?.height,
+      gardenData: data,
+      targetGarden: data?.id,
     });
   };
 
