@@ -1,34 +1,45 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
-import React, { Component } from 'react';
-import Canvas from 'react-native-canvas';
-import { StyleSheet, Text, View, ScrollView, PanResponder, 
-  ToastAndroid,Animated,TouchableOpacity,TouchableHighlight,
-  Platform,Alert, Modal, SafeAreaView, StatusBar
-} from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
-import { Dimensions } from 'react-native';
-import GardenBed from '../classes/GardenBed';
+import React, { Component } from "react";
+import Canvas from "react-native-canvas";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  PanResponder,
+  ToastAndroid,
+  Animated,
+  TouchableOpacity,
+  TouchableHighlight,
+  Platform,
+  Alert,
+  Modal,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
+import { Button, TextInput } from "react-native-paper";
+import { Dimensions } from "react-native";
+import GardenBed from "../classes/GardenBed";
 
 //size of the element
-const WSIZE = Dimensions.get('window').width;
-const HSIZE = Dimensions.get('window').height;
+const WSIZE = Dimensions.get("window").width;
+const HSIZE = Dimensions.get("window").height;
 var divisor = 27;
-var square = WSIZE/divisor;
+var square = WSIZE / divisor;
 var ModalLocation;
-
 
 class GardenPlanner extends Component {
   //stores canvas context
   ctx;
-  
 
   //stores where the screen has been touched
-  TargetX=0;
-  TargetY=0;
+  TargetX = 0;
+  TargetY = 0;
   //stores bed creation parameters
-  BedX=1;
-  BedY=1;
-  
+  BedX = 1;
+  BedY = 1;
+
   //stores existing beds
   garden;
   beds = [];
@@ -59,126 +70,131 @@ class GardenPlanner extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    //if(divisor != this.props.dim){
-    if(divisor != this.props.dim || this.targetGarden !== this.props.targetGarden){
-      this.initBeds();
+    this.initBeds();
+    if (divisor != this.props.dim || this.targetGarden !== this.props.targetGarden) {
       divisor = this.props.dim;
-      square = WSIZE/divisor;
+      square = WSIZE / divisor;
       ctx.clearRect(0, 0, WSIZE, WSIZE);
       this.CanvasNew();
     }
   }
 
   initBeds() {
-    this.beds = this.props.gardenData?.beds ? this.props.gardenData.beds.map((bed) => {
-      // HACK: bed.coord_x => x1, bed.coord_y, bed.width => x2, bed.height => y2
-      return new GardenBed(bed.coord_x, bed.coord_y, bed.width, bed.height, bed.name)
-    }) : [];
-    console.log(`GARDEN DATA`, this.props.gardenData);
-    console.log(`BEDS ARRAY`, this.beds);
+    if (this.targetGarden === this.props.targetGarden) return;
+
+    this.targetGarden = this.props.targetGarden;
+    this.beds = this.props.gardenData?.beds
+      ? this.props.gardenData.beds.map((bed) => {
+          // HACK: bed.coord_x => x1, bed.coord_y, bed.width => x2, bed.height => y2
+          return new GardenBed(bed.coord_x, bed.coord_y, bed.width, bed.height, bed.name);
+        })
+      : [];
+    console.log("GARDEN DATA", this.props.gardenData);
+    console.log("BEDS ARRAY", this.beds);
   }
   handleCanvas = (canvas) => {
     divisor = this.props.dim;
-    square = WSIZE/divisor;
-    if(canvas !== null){
-      ctx = canvas.getContext('2d');
+    square = WSIZE / divisor;
+    if (canvas !== null) {
+      ctx = canvas.getContext("2d");
       canvas.width = WSIZE;
       canvas.height = WSIZE;
       this.CanvasNew();
     }
   };
-  CanvasNew(){
+  CanvasNew() {
     size = WSIZE;
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, size, size);
-    
+
     ctx.beginPath();
     for (let i = 0; i <= divisor; i++) {
-      ctx.moveTo(size/divisor*(i), 0);
-      ctx.lineTo(size/divisor*(i), size);
+      ctx.moveTo((size / divisor) * i, 0);
+      ctx.lineTo((size / divisor) * i, size);
       ctx.stroke();
-      ctx.moveTo(0, size/divisor*(i));
-      ctx.lineTo(size, size/divisor*(i));
+      ctx.moveTo(0, (size / divisor) * i);
+      ctx.lineTo(size, (size / divisor) * i);
       ctx.stroke();
-    }//*/
+    } //*/
     for (let i = 0; i < this.beds.length; i++) {
       this.DrawBed(this.beds[i]);
     }
   }
-  onTouch(evt){
-    var x = Math.floor(evt.nativeEvent.locationX/square)+1;
-    var y = Math.floor(evt.nativeEvent.locationY/square)+1;
-    TargetX = Math.floor(evt.nativeEvent.locationX/square);
-    TargetY = Math.floor(evt.nativeEvent.locationY/square);
-    BedX=1;
-    BedY=1;
-    
-    if(this.beds.length > 0){
-      
+  onTouch(evt) {
+    var x = Math.floor(evt.nativeEvent.locationX / square) + 1;
+    var y = Math.floor(evt.nativeEvent.locationY / square) + 1;
+    TargetX = Math.floor(evt.nativeEvent.locationX / square);
+    TargetY = Math.floor(evt.nativeEvent.locationY / square);
+    BedX = 1;
+    BedY = 1;
+
+    if (this.beds.length > 0) {
       var i = 0;
-      while(i < this.beds.length && !this.beds[i].didTouch(TargetX,TargetY)){
+      while (i < this.beds.length && !this.beds[i].didTouch(TargetX, TargetY)) {
         i++;
-        if(i == this.beds.length){
+        if (i == this.beds.length) {
           this.setaddNewVisible(true);
         }
-      }//*/
-      if(i < this.beds.length && this.beds[i].didTouch(TargetX,TargetY)){
+      } //*/
+      if (i < this.beds.length && this.beds[i].didTouch(TargetX, TargetY)) {
         this.OpenBedEdit(this.beds[i]);
       }
-    }else{
+    } else {
       this.setaddNewVisible(true);
     }
-    
-    
   }
 
-  OpenBedEdit(bed){
+  OpenBedEdit(bed) {
     TargetBed = bed;
-    
+
     this.setEditVisible(true);
   }
 
   generateColor() {
     var randomColor = Math.floor(Math.random() * 16777215)
       .toString(16)
-      .padStart(6, '0');
+      .padStart(6, "0");
     return `#${randomColor}`;
   }
-  DrawBed(bed){
+  DrawBed(bed) {
     ctx.fillStyle = this.generateColor();
-    ctx.fillRect(bed.leftX*square, bed.topY*square, bed.width*square, bed.height*square);
+    ctx.fillRect(bed.leftX * square, bed.topY * square, bed.width * square, bed.height * square);
     ctx.fillStyle = "white";
-    ctx.fillRect(bed.leftX*square+square*0.25, bed.topY*square+square*0.25, bed.width*square-square*0.5, bed.height*square-square*0.5);
+    ctx.fillRect(
+      bed.leftX * square + square * 0.25,
+      bed.topY * square + square * 0.25,
+      bed.width * square - square * 0.5,
+      bed.height * square - square * 0.5
+    );
   }
-  
-  onSecondTouch(evt){
-    var x = Math.floor(evt.nativeEvent.locationX/square);
-    var y = Math.floor(evt.nativeEvent.locationY/square);
+
+  onSecondTouch(evt) {
+    var x = Math.floor(evt.nativeEvent.locationX / square);
+    var y = Math.floor(evt.nativeEvent.locationY / square);
     var bed = new GardenBed(TargetX, TargetY, x, y, "");
 
-    if(this.beds.length > 0){
+    if (this.beds.length > 0) {
       var i = 0;
-      while(i < this.beds.length && !this.beds[i].doesIntersect(bed)){
+      while (i < this.beds.length && !this.beds[i].doesIntersect(bed)) {
         i++;
-        if(i == this.beds.length){
+        if (i == this.beds.length) {
           this.beds.push(bed);
           this.DrawBed(bed);
           this.ClosePrompt();
         }
-      }//*/
-      if(i < this.beds.length-1 && this.beds[i].doesIntersect(bed)){
-        ToastAndroid.show("intersects "+this.beds[i].name, ToastAndroid.SHORT);
+      } //*/
+      if (i < this.beds.length - 1 && this.beds[i].doesIntersect(bed)) {
+        ToastAndroid.show("intersects " + this.beds[i].name, ToastAndroid.SHORT);
       }
-    }else{
+    } else {
       this.beds.push(bed);
       this.DrawBed(bed);
       this.ClosePrompt();
     }
-    
   }
-  DeleteBed(bed = TargetBed){
+  DeleteBed(bed = TargetBed) {
     for (let i = 0; i < this.beds.length; i++) {
-      if(bed == this.beds[i]){
+      if (bed == this.beds[i]) {
         this.beds.splice(i, 1);
       }
     }
@@ -186,31 +202,31 @@ class GardenPlanner extends Component {
     this.CloseEdit();
   }
 
-  ClosePrompt(){
+  ClosePrompt() {
     this.setaddNewVisible(false);
   }
-  CloseEdit(){
+  CloseEdit() {
     this.setEditVisible(false);
   }
 
-  editBedName(text){
+  editBedName(text) {
     TargetBed.name = text;
     this.setBedName(TargetBed.name);
   }
-  editTargetY(text){
-    TargetY=parseInt(text);
+  editTargetY(text) {
+    TargetY = parseInt(text);
   }
-  editTargetX(text){
-    TargetX=parseInt(text);
+  editTargetX(text) {
+    TargetX = parseInt(text);
   }
-  editBedY(text){
-    BedY=parseInt(text);
+  editBedY(text) {
+    BedY = parseInt(text);
   }
-  editBedX(text){
-    BedX=parseInt(text);
+  editBedX(text) {
+    BedX = parseInt(text);
   }
   //*/
-  promptStyle = function(options) {
+  promptStyle = function (options) {
     return {
       paddingTop: 5,
       top: ModalLocation,
@@ -223,15 +239,15 @@ class GardenPlanner extends Component {
 
   render() {
     const { addNewVisible, editVisible, bedName, bedNotes } = this.state;
-    if(this.props.sentValid){
+    if (this.props.sentValid) {
       return (
         <View
-          onLayout={event => {
+          onLayout={(event) => {
             const layout = event.nativeEvent.layout;
-            ModalLocation = StatusBar.currentHeight+layout.y;
+            ModalLocation = StatusBar.currentHeight + layout.y;
           }}
         >
-          <TouchableOpacity onPress={(evt) => this.onTouch(evt) } style={styles.GardenView}>
+          <TouchableOpacity onPress={(evt) => this.onTouch(evt)} style={styles.GardenView}>
             <Modal
               animationType="slide"
               transparent={true}
@@ -242,8 +258,10 @@ class GardenPlanner extends Component {
               }}
             >
               <View style={this.promptStyle()}>
-                <TouchableOpacity  onPress={(evt) => this.onSecondTouch(evt) } style={styles.Overlay}>
-                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={(evt) => this.onSecondTouch(evt)}
+                  style={styles.Overlay}
+                ></TouchableOpacity>
                 <Button
                   title="Cancel"
                   icon="close"
@@ -251,7 +269,7 @@ class GardenPlanner extends Component {
                   onPress={() => this.ClosePrompt()}
                   mode="contained"
                 >
-                Cancel
+                  Cancel
                 </Button>
               </View>
             </Modal>
@@ -268,19 +286,17 @@ class GardenPlanner extends Component {
                 <TextInput
                   mode="outlined"
                   label="Bed Name"
-                  style={styles.input} 
-                  value={bedName} 
-                  onChangeText={text => this.editBedName(text)}
+                  style={styles.input}
+                  value={bedName}
+                  onChangeText={(text) => this.editBedName(text)}
                 />
                 <TextInput
                   mode="outlined"
                   label="Notes"
-                  style={styles.inputTall} 
+                  style={styles.inputTall}
                   multiline={true}
-                  
                 />
-                
-  
+
                 <Button
                   title="Close Bed Screen"
                   icon="undo"
@@ -296,22 +312,22 @@ class GardenPlanner extends Component {
                   style={styles.modalButton}
                   onPress={() => this.DeleteBed()}
                   mode="contained"
-                >Delete Bed</Button>
+                >
+                  Delete Bed
+                </Button>
               </View>
             </Modal>
-            <Canvas ref={this.handleCanvas} style={styles.canvas}/>
+            <Canvas ref={this.handleCanvas} style={styles.canvas} />
           </TouchableOpacity>
         </View>
       );
-    }else{
-      return (<Text>Please select or create a garden from the home page</Text>);
+    } else {
+      return <Text>Please select or create a garden from the home page</Text>;
     }
-    
   }
 }
 
 export default GardenPlanner;
-
 
 const styles = StyleSheet.create({
   canvas: {
@@ -338,9 +354,9 @@ const styles = StyleSheet.create({
   Overlay: {
     width: WSIZE,
     height: WSIZE,
-    backgroundColor: 'rgba(200, 200, 200, 0.2)',
+    backgroundColor: "rgba(200, 200, 200, 0.2)",
   },
-  prompt:{
+  prompt: {
     margin: 20,
     backgroundColor: "#ffffff",
     borderRadius: 20,
@@ -349,7 +365,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 5
+      height: 5,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
@@ -361,6 +377,5 @@ const styles = StyleSheet.create({
   },
   inputTall: {
     width: "85%",
-    
   },
 });
