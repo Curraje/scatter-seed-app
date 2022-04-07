@@ -1,6 +1,6 @@
 import React from "react";
 import HomePage from "../screens/Home";
-import TasksPage from "../screens/Tasks";
+import WeatherPage from "../screens/Weather";
 import SettingsPage from "../screens/Settings";
 import GardenPage from "../screens/Garden";
 import CalendarPage from "../screens/Calendar";
@@ -31,8 +31,8 @@ export default function AppNavigator() {
             case "Settings":
               iconName = "sun";
               break;
-            case "Tasks":
-              iconName = "list-alt";
+            case "Weather":
+              iconName = "snowflake";
               break;
             case "Garden":
               iconName = "envira";
@@ -55,7 +55,7 @@ export default function AppNavigator() {
       })}
     >
       <Tab.Screen name="Garden" component={GardenPage} />
-      <Tab.Screen name="Tasks" component={TasksPage} />
+      <Tab.Screen name="Weather" component={WeatherPage} />
       <Tab.Screen name="Home" component={HomePage} />
       <Tab.Screen name="Calendar" component={CalendarPage} />
       <Tab.Screen name="Settings" component={SettingsPage} />

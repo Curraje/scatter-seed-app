@@ -1,7 +1,7 @@
 declare namespace Navigation {
   export declare type AppTabsParamList = {
     Home: undefined;
-    Tasks: undefined;
+    Weather: undefined;
     Calendar: undefined;
     Garden: undefined;
     Settings: undefined;
