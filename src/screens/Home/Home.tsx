@@ -94,6 +94,8 @@ export default function HomePage({ navigation }: HomePageProps) {
   };
   const selectGardenHandler = (item: any) => {
     switchSelectModal();
+    setTargetGarden(item.id);
+    setCreateSize(item.height);
     openGarden(item);
   };
 
@@ -143,8 +145,6 @@ export default function HomePage({ navigation }: HomePageProps) {
                   style={styles.button}
                   mode="contained"
                   onPress={() => {
-                    setTargetGarden(item.id);
-                    setCreateSize(item.height);
                     selectGardenHandler(item);
                   }}
                 >
