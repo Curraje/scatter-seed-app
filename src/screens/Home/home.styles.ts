@@ -19,6 +19,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     fontWeight: "bold",
   },
+  textInput: {
+    fontSize: 14,
+    height: "25%",
+    width: "100%",
+    fontWeight: "bold",
+  },
   chore: {
     fontSize: 12,
     alignItems: "flex-start",

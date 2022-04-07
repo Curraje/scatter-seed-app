@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, FlatList, Pressable, Modal, Alert } from "react-native";
+import { Text, View, FlatList, Modal, Alert } from "react-native";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./calendar.styles";
 import { gql, useQuery } from "@apollo/client";
 import { Button } from "react-native-paper";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import PlantingCalendar from "../../components/CalendarComponent";
-import CalendarCanvas from "../../components/CanvasCalendar";
-import PlantCalendar from "../../components/CanvasCalendar";
 
 // FIXME: Temporary proof of concept
 const PLANTS_QUERY = gql`
@@ -124,19 +122,25 @@ export default function CalendarPage({ navigation }: CalendarPageProps) {
     navigation.navigate("Home");
   };
 
-  return (
-    <View style={GlobalStyles.body}>
-      <Text>Planting Calendar</Text>
+  if (loading === true) {
+    return <View><Text>Loading...</Text></View>;
+  }
+  else
+  {
+    return (
+      <View style={GlobalStyles.body}>
+        <Text>Planting Calendar</Text>
 
-      <FlatList
-        data={data?.plants}
-        renderItem={({ item }) => (
-          <View style={styles.container}>
-            <PlantItem plant={item} />
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
-  );
+        <FlatList
+          data={data?.plants}
+          renderItem={({ item }) => (
+            <View style={styles.container}>
+              <PlantItem plant={item} />
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+    );
+  }
 }

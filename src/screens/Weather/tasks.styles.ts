@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   }, 
   weatherBottom: {
-    flex: 2,
+    flex: 1,
     width: "90%",
     alignItems: "center",
     flexDirection: "column",

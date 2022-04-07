@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { Modal, Pressable, Text, View, TextInput, FlatList, ScrollView } from "react-native";
-import { Button } from "react-native-paper";
+import { Modal, Text, View, FlatList } from "react-native";
+import { TextInput, Button } from "react-native-paper";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./home.styles";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -109,8 +108,12 @@ export default function HomePage({ navigation }: HomePageProps) {
 
   //navigate to the tasks page
   const tasksHandler = () => {
-    navigation.navigate("Tasks");
+    navigation.navigate("Weather");
   };
+
+  // const calendarHandler = () = {
+  //   // navigation.navigate("Calendar");
+  // };
 
   const loginHandler = () => {
     navigation.navigate("Login");
@@ -174,10 +177,13 @@ export default function HomePage({ navigation }: HomePageProps) {
         }}
       >
         <View style={GlobalStyles.modal}>
-          <Text>create yo shit</Text>
+          <Text>How many Square Feet is your Garden?</Text>
           <TextInput
+            style={styles.textInput}
+            mode="flat"
+            label="Garden Sq.Ft"
             underlineColorAndroid="transparent"
-            placeholder="0.00"
+            placeholder="0"
             keyboardType={"numeric"}
             value={createSize.toString()}
             onChangeText={onChangeTextInput}
@@ -187,24 +193,24 @@ export default function HomePage({ navigation }: HomePageProps) {
             icon={() => (
               <FontAwesome5
                 name={"border-all"}
-                style={{ width: 15, height: 15, tintColor: "green" }}
+                style={{ width: 15, height: 15 }}
               />
             )}
             mode="contained"
             onPress={async () => await generateGardenHandler()}
           >
-            hello
+            Start Garden
           </Button>
         </View>
       </Modal>
 
       <FontAwesome5 name={"envira"} size={150} color={"#85e085"} />
-      <Text style={styles.headerText}>Welcome to the ScatterSeed</Text>
+      <Text style={styles.headerText}>Welcome to ScatterSeed</Text>
 
       <Button
         style={styles.button}
         icon={() => (
-          <FontAwesome5 name={"border-all"} style={{ width: 15, height: 15, tintColor: "green" }} />
+          <FontAwesome5 name={"arrow-alt-circle-left"} style={{ width: 15, height: 15 }} />
         )}
         mode="contained"
         onPress={selectGardenModalHandler}
@@ -216,46 +222,40 @@ export default function HomePage({ navigation }: HomePageProps) {
         icon={() => (
           <FontAwesome5
             name={"border-none"}
-            style={{ width: 15, height: 15, tintColor: "green" }}
+            style={{ width: 15, height: 15 }}
           />
         )}
         mode="contained"
         onPress={createGardenModalHandler}
       >
-        Create Garden (Go to login)
+        Start New Garden
       </Button>
       <Button
         icon={() => (
-          <FontAwesome5 name={"align-left"} style={{ width: 15, height: 15, tintColor: "green" }} />
+          <FontAwesome5 name={"calendar"} style={{ width: 15, height: 15 }} />
         )}
         style={styles.button}
         mode="contained"
-        onPress={() => console.log("Pressed")}
+        onPress={() => {
+          navigation.navigate("Calendar");
+        }}
       >
-        Monthly Tasks
+        Plant Calendars
       </Button>
       <Button
         icon={() => (
           <FontAwesome5
-            name={"calendar-check"}
-            style={{ width: 15, height: 15, tintColor: "green" }}
+            name={"snowflake"}
+            style={{ width: 15, height: 15 }}
           />
         )}
         style={styles.button}
         mode="contained"
-        onPress={tasksHandler}
+        onPress={tasksHandler} //Navigate to Weather Page
       >
-        All Tasks
+        Weather
       </Button>
 
-      <Text style={styles.subheader}>Upcoming Chores</Text>
-
-      <View style={styles.choreBlock}>
-        <Text style={styles.chore}>Task 1 - Due March 15, 2022</Text>
-        <Text style={styles.chore}>Task 2 - Due Smarch 11, 2023</Text>
-        <Text style={styles.chore}>Task 3 - Stupid Smarch</Text>
-        <Text style={styles.chore}>Task 4 - April 1, 2022 (NOT A JOKE)</Text>
-      </View>
     </View>
   );
 }

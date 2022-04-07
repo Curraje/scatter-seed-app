@@ -15,6 +15,7 @@ const Tab = createBottomTabNavigator<Navigation.AppTabsParamList>();
 export default function AppNavigator() {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: "#fbf0e2",
         tabBarInactiveTintColor: "#7a4b0e",
@@ -25,6 +26,7 @@ export default function AppNavigator() {
           fontSize: 14,
           fontWeight: "bold",
         },
+        
         tabBarIcon: ({ focused }) => {
           let iconName = "building";
           switch (route.name) {
