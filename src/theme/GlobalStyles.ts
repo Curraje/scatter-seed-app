@@ -20,4 +20,19 @@ export default StyleSheet.create({
     fontWeight: "700",
     color: "#7a4b0e",
   },
+  modal:{
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
 });

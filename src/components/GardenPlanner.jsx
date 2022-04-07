@@ -3,16 +3,16 @@ import React, { Component } from 'react';
 import Canvas from 'react-native-canvas';
 import { StyleSheet, Text, View, ScrollView, PanResponder, 
   ToastAndroid,Animated,TouchableOpacity,TouchableHighlight,
-  Platform,Alert, Modal, TextInput, SafeAreaView, StatusBar
+  Platform,Alert, Modal, SafeAreaView, StatusBar
 } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 import { Dimensions } from 'react-native';
 import GardenBed from '../classes/GardenBed';
 
 //size of the element
 const WSIZE = Dimensions.get('window').width;
 const HSIZE = Dimensions.get('window').height;
-var divisor = 15;
+var divisor = 27;
 var square = WSIZE/divisor;
 var ModalLocation;
 
@@ -52,7 +52,19 @@ class GardenPlanner extends Component {
   setBedNotes = (visible) => {
     this.setState({ bedNotes: visible });
   };
+  //holy fuck i think it works now
+  componentDidUpdate(prevProps, prevState) {
+    if(divisor != this.props.dim){
+      this.beds = [];
+      divisor = this.props.dim;
+      square = WSIZE/divisor;
+      ctx.clearRect(0, 0, WSIZE, WSIZE);
+      this.CanvasNew();
+    }
+  }
   handleCanvas = (canvas) => {
+    divisor = this.props.dim;
+    square = WSIZE/divisor;
     if(canvas !== null){
       ctx = canvas.getContext('2d');
       canvas.width = WSIZE;
@@ -64,7 +76,8 @@ class GardenPlanner extends Component {
     size = WSIZE;
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, size, size);
-      
+    
+    ctx.beginPath();
     for (let i = 0; i <= divisor; i++) {
       ctx.moveTo(size/divisor*(i), 0);
       ctx.lineTo(size/divisor*(i), size);
@@ -76,7 +89,6 @@ class GardenPlanner extends Component {
     for (let i = 0; i < this.beds.length; i++) {
       this.DrawBed(this.beds[i]);
     }
-
   }
   onTouch(evt){
     var x = Math.floor(evt.nativeEvent.locationX/square)+1;
@@ -96,7 +108,6 @@ class GardenPlanner extends Component {
         }
       }//*/
       if(i < this.beds.length && this.beds[i].didTouch(TargetX,TargetY)){
-        ToastAndroid.show(this.beds[i].name, ToastAndroid.SHORT);
         this.OpenBedEdit(this.beds[i]);
       }
     }else{
@@ -137,6 +148,7 @@ class GardenPlanner extends Component {
         if(i == this.beds.length){
           this.beds.push(bed);
           this.DrawBed(bed);
+          this.ClosePrompt();
         }
       }//*/
       if(i < this.beds.length-1 && this.beds[i].doesIntersect(bed)){
@@ -145,8 +157,9 @@ class GardenPlanner extends Component {
     }else{
       this.beds.push(bed);
       this.DrawBed(bed);
+      this.ClosePrompt();
     }
-    this.ClosePrompt();
+    
   }
   DeleteBed(bed = TargetBed){
     for (let i = 0; i < this.beds.length; i++) {
@@ -195,71 +208,90 @@ class GardenPlanner extends Component {
 
   render() {
     const { addNewVisible, editVisible, bedName, bedNotes } = this.state;
-    return (
-      <View
-        onLayout={event => {
-          const layout = event.nativeEvent.layout;
-          ModalLocation = StatusBar.currentHeight+layout.y;
-        }}
-      >
-        <TouchableOpacity onPress={(evt) => this.onTouch(evt) } style={styles.GardenView}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={addNewVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              this.setaddNewVisible(!addNewVisible);
-            }}
-          >
-            <View style={this.promptStyle()}>
-              <TouchableOpacity  onPress={(evt) => this.onSecondTouch(evt) } style={styles.Overlay}>
-              </TouchableOpacity>
-              <Button
-                title="Cancel"
-                icon="close"
-                style={styles.modalButton}
-                onPress={() => this.ClosePrompt()}
-                mode="contained"
-              >
-              Close Prompt
-              </Button>
-            </View>
-          </Modal>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={editVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              this.setaddNewVisible(!editVisible);
-            }}
-          >
-            <View style={styles.prompt}>
-              <TextInput style={styles.input} value={bedName} onChangeText={text => this.editBedName(text)}/>
-
-              <Button
-                title="Close Bed Screen"
-                icon="undo"
-                style={styles.modalButton}
-                onPress={() => this.CloseEdit()}
-                mode="contained"
-              >
-                Close Modal
-              </Button>
-              <Button
-                title="Delete Bed"
-                icon="delete"
-                style={styles.modalButton}
-                onPress={() => this.DeleteBed()}
-                mode="contained"
-              >Delete Bed</Button>
-            </View>
-          </Modal>
-          <Canvas ref={this.handleCanvas} style={styles.canvas}/>
-        </TouchableOpacity>
-      </View>
-    );
+    if(this.props.sentValid){
+      return (
+        <View
+          onLayout={event => {
+            const layout = event.nativeEvent.layout;
+            ModalLocation = StatusBar.currentHeight+layout.y;
+          }}
+        >
+          <TouchableOpacity onPress={(evt) => this.onTouch(evt) } style={styles.GardenView}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={addNewVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                this.setaddNewVisible(!addNewVisible);
+              }}
+            >
+              <View style={this.promptStyle()}>
+                <TouchableOpacity  onPress={(evt) => this.onSecondTouch(evt) } style={styles.Overlay}>
+                </TouchableOpacity>
+                <Button
+                  title="Cancel"
+                  icon="close"
+                  style={styles.modalButton}
+                  onPress={() => this.ClosePrompt()}
+                  mode="contained"
+                >
+                Cancel
+                </Button>
+              </View>
+            </Modal>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={editVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                this.setaddNewVisible(!editVisible);
+              }}
+            >
+              <View style={styles.prompt}>
+                <TextInput
+                  mode="outlined"
+                  label="Bed Name"
+                  style={styles.input} 
+                  value={bedName} 
+                  onChangeText={text => this.editBedName(text)}
+                />
+                <TextInput
+                  mode="outlined"
+                  label="Notes"
+                  style={styles.inputTall} 
+                  multiline={true}
+                  
+                />
+                
+  
+                <Button
+                  title="Close Bed Screen"
+                  icon="undo"
+                  style={styles.modalButton}
+                  onPress={() => this.CloseEdit()}
+                  mode="contained"
+                >
+                  Close Modal
+                </Button>
+                <Button
+                  title="Delete Bed"
+                  icon="delete"
+                  style={styles.modalButton}
+                  onPress={() => this.DeleteBed()}
+                  mode="contained"
+                >Delete Bed</Button>
+              </View>
+            </Modal>
+            <Canvas ref={this.handleCanvas} style={styles.canvas}/>
+          </TouchableOpacity>
+        </View>
+      );
+    }else{
+      return (<Text>Please select or create a garden from the home page</Text>);
+    }
+    
   }
 }
 
@@ -295,7 +327,7 @@ const styles = StyleSheet.create({
   },
   prompt:{
     margin: 20,
-    backgroundColor: "#bce1f6",
+    backgroundColor: "#ffffff",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -309,11 +341,11 @@ const styles = StyleSheet.create({
     elevation: 15,
   },
   input: {
-    width: "60%",
+    width: "85%",
     height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: "white",
+  },
+  inputTall: {
+    width: "85%",
+    height: "50%",
   },
 });

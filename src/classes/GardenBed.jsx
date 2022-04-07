@@ -45,7 +45,6 @@ class GardenBed {
         }else{
             return false;
         }
-        
     }
 }
 

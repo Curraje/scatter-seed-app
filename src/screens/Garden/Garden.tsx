@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import GlobalStyles from "../../theme/GlobalStyles";
 import styles from "./garden.styles";
 import GardenPlanner from "../../components/GardenPlanner";
@@ -9,10 +9,30 @@ import Testc from "../../components/GestureTest";
 
 type GardenPageProps = Navigation.AppTabsPageProps<"Garden">;
 
-export default function GardenPage({ navigation }: GardenPageProps) {
+export default function GardenPage({ route, navigation }: GardenPageProps) {
+
+
+  // THIS IS HOW YOU SEND PARAMS IN TYPESCRIPT
+  const params = route.params ?? {sentGarden: false, gardenData: 1};
+  const sentGarden = params.sentGarden;
+  const gardenData = params.gardenData;
+
+
   const onPressHandler = () => {
     navigation.navigate("Home");
   };
+  /*
+  React.useEffect(() => {
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      ToastAndroid.show(JSON.stringify(route.params), ToastAndroid.SHORT);
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);//*/
+
+  
 
   return (
     <View style={GardenStyles.body}>
@@ -22,9 +42,9 @@ export default function GardenPage({ navigation }: GardenPageProps) {
         onPress={onPressHandler}
         style={({ pressed }) => ({ backgroundColor: pressed ? "#555" : "#ddd" })}
       >
-        <Text style={styles.text}>Home</Text>
+        <Text style={styles.text}>Home</Text> 
       </Pressable>
-      <GardenPlanner></GardenPlanner>
+      <GardenPlanner dim={gardenData} sentValid={sentGarden}/>
     </View>
   );
 }

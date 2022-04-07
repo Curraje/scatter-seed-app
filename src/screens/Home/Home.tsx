@@ -21,7 +21,8 @@ export default function HomePage({ navigation }: any ) {
   const selectGardenHandler = () => {
     if(gardensExist){
       //use selected garden
-      switchSelectModal();
+      //switchSelectModal();
+      gardenHandler(5);
     }else{
       createGardenHandler();
     }
@@ -37,8 +38,8 @@ export default function HomePage({ navigation }: any ) {
     }
   };
 
-  const gardenHandler = () => {
-    navigation.navigate("Garden");
+  const gardenHandler = (size: number) => {
+    navigation.navigate("Garden", {sentGarden: true, gardenData: size});
   };
   //navigate to the tasks page
   const tasksHandler = () => {
@@ -67,7 +68,7 @@ export default function HomePage({ navigation }: any ) {
           switchSelectModal();
         }}
       >
-        <View style={GlobalStyles.body}>
+        <View style={GlobalStyles.modal}>
           <Text>select yo shit</Text>
         </View>
       </Modal>
@@ -79,7 +80,7 @@ export default function HomePage({ navigation }: any ) {
           switchCreateModal();
         }}
       >
-        <View style={GlobalStyles.body}>
+        <View style={GlobalStyles.modal}>
           <Text>create yo shit</Text>
         </View>
       </Modal>
