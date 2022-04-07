@@ -7,7 +7,7 @@ import { API_URL } from "./utils/api.utils";
 
 console.log("API URL:", API_URL);
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: API_URL,
   cache: new InMemoryCache(),
 });
