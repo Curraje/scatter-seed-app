@@ -199,6 +199,57 @@ export const UPDATE_BED_REPLACE_PLANT = gql`
   }
 `;
 
+export const UPDATE_BED_WITHOUT_PLANT = gql`
+  mutation UpdateBedWithoutPlant(
+    $id: Int!
+    $name: StringFieldUpdateOperationsInput!
+    $x1: FloatFieldUpdateOperationsInput!
+    $y1: FloatFieldUpdateOperationsInput!
+    $x2: FloatFieldUpdateOperationsInput!
+    $y2: FloatFieldUpdateOperationsInput!
+    $notes: StringFieldUpdateOperationsInput!
+  ) {
+    updateBed(
+      where: { id: $id }
+      data: { coord_x: $x1, coord_y: $y1, name: $name, width: $x2, height: $y2, notes: $notes }
+    ) {
+      id
+      coord_x
+      coord_y
+      name
+      height
+      width
+      updatedAt
+      plants {
+        id
+        plant {
+          id
+          CommonName
+          BotanicalName
+          PlantType
+          SunExposure
+          SoilpH
+          BloomTime
+          FlowerColour
+          MinIdealTemp
+          HardinessZones
+          SeedDepth
+          SproutsIn
+          PlantSpacing
+          FrostHardy
+          MinFullSun
+          RowWidth
+          DaystoMaturity
+          SowIndoors
+          Transplant
+          SowOutdoors
+        }
+      }
+      notes
+    }
+  }
+`;
+
 export const DELETE_BED = gql`
   mutation DeleteBed($id: Int!) {
     deleteBed(where: { id: $id }) {
