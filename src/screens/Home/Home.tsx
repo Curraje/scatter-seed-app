@@ -30,7 +30,7 @@ export default function HomePage({ navigation }: HomePageProps) {
   const [createGarden, { data: cgData, loading: cgLoading, error: cgError }] = useMutation<
     CreateGardenMutation,
     CreateGardenMutationVariables
-  >(CREATE_GARDEN, {refetchQueries:[GET_USER_GARDENS]});
+  >(CREATE_GARDEN, { refetchQueries: [GET_USER_GARDENS] });
 
   const {
     data: ugData,
@@ -88,21 +88,22 @@ export default function HomePage({ navigation }: HomePageProps) {
       });
       setTargetGarden(cgData?.createGarden.id ?? 1);
       //
-      setCreateCount(createCount+1);
-      openGarden();
+      setCreateCount(createCount + 1);
+      openGarden(cgData?.createGarden);
     }
   };
-  const selectGardenHandler = () => {
+  const selectGardenHandler = (item: any) => {
     switchSelectModal();
-    openGarden();
+    openGarden(item);
   };
 
-  const openGarden = () => {
+  const openGarden = (data: any) => {
     //go to garden based on garden id
     navigation.navigate("Garden", {
       isGardenSent: true,
       gardenSize: createSize,
-      gardenData: cgData?.createGarden,
+      gardenData: data?.createGarden,
+      targetGarden: targetGarden,
     });
   };
 
@@ -141,14 +142,28 @@ export default function HomePage({ navigation }: HomePageProps) {
                 <Button
                   style={styles.button}
                   mode="contained"
-                  onPress={selectGardenHandler}
+                  onPress={() => {
+                    setTargetGarden(item.id);
+                    setCreateSize(item.height);
+                    selectGardenHandler(item);
+                  }}
                 >
                   {`${item.name} ${item.id}, ${item.width}`}
                 </Button>
               </View>
             )}
-            ListEmptyComponent={!ugLoading ? <View><Text>Loading Gardens...</Text></View> : <View><Text>No Gardens Available!</Text></View>}
-            // keyExtractor={(item) => item.id}
+            ListEmptyComponent={
+              !ugLoading ? (
+                <View>
+                  <Text>Loading Gardens...</Text>
+                </View>
+              ) : (
+                <View>
+                  <Text>No Gardens Available!</Text>
+                </View>
+              )
+            }
+            keyExtractor={(item) => item.id.toString()}
           />
         </View>
       </Modal>
