@@ -29,6 +29,8 @@ import { UPDATE_BED_WITHOUT_PLANT } from "../graphql/mutation";
 const WSIZE = Dimensions.get("window").width;
 const HSIZE = Dimensions.get("window").height;
 var divisor = 27;
+var targetGarden = -1;
+
 var square = WSIZE / divisor;
 var ModalLocation;
 
@@ -46,7 +48,6 @@ class GardenPlanner extends Component {
   //stores existing beds
   garden;
   beds = [];
-  targetGarden = -1;
 
   state = {
     addNewVisible: false,
@@ -66,6 +67,10 @@ class GardenPlanner extends Component {
   };
   setBedNotes = (visible) => {
     this.setState({ bedNotes: visible });
+    // apolloClient.mutate({
+    //   mutation: UPDATE_BED_WITHOUT_PLANT,
+    //   refetchQueries: [GET_USER_GARDENS]
+    // })
   };
 
   componentDidMount() {
@@ -73,7 +78,7 @@ class GardenPlanner extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (divisor != this.props.dim || this.targetGarden !== this.props.targetGarden) {
+    if (divisor != this.props.dim || targetGarden !== this.props.targetGarden) {
       this.initBeds();
       divisor = this.props.dim;
       square = WSIZE / divisor;
@@ -83,9 +88,7 @@ class GardenPlanner extends Component {
   }
 
   initBeds() {
-    if (this.targetGarden === this.props.targetGarden) return;
-
-    this.targetGarden = this.props.targetGarden;
+    targetGarden = this.props.targetGarden;
     this.beds = this.props.gardenData?.beds
       ? this.props.gardenData.beds.map((bed) => {
           // HACK: bed.coord_x => x1, bed.coord_y, bed.width => x2, bed.height => y2

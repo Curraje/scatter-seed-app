@@ -39,9 +39,15 @@ export default function HomePage({ navigation }: HomePageProps) {
 
   useEffect(() => {
     console.log("LOADING USER GARDEN DATA", ugLoading);
-    console.log("ERROR LOADING USER GARDEN DATA", ugError);
-    if (!ugLoading) console.log("USER GARDEN DATA", ugData);
+    console.log("ERROR LOADING USER GARDEN DATA", JSON.stringify(ugError, null, 2));
+    // if (!ugLoading) openGarden(cgData?.createGarden);
   }, [ugData, ugLoading, ugError]);
+
+  useEffect(() => {
+    console.log("LOADING CREATE GARDEN DATA", cgLoading);
+    console.log("ERROR LOADING CREATE GARDEN DATA", JSON.stringify(cgError, null, 2));
+    if (!cgLoading) openGarden(cgData?.createGarden);
+  }, [cgData, cgLoading, cgError]);
 
   const onChangeTextInput = (text: string) => {
     const numericRegex = /^([0-9]{1,100})+$/;
@@ -88,7 +94,6 @@ export default function HomePage({ navigation }: HomePageProps) {
       setTargetGarden(cgData?.createGarden.id ?? 1);
       //
       setCreateCount(createCount + 1);
-      openGarden(cgData?.createGarden);
     }
   };
   const selectGardenHandler = (item: any) => {
@@ -97,6 +102,8 @@ export default function HomePage({ navigation }: HomePageProps) {
   };
 
   const openGarden = (data: any) => {
+    if (!data) return;
+    console.log("SENDING OPEN GARDEN DATA", data);
     //go to garden based on garden id
     navigation.navigate("Garden", {
       isGardenSent: true,
@@ -183,19 +190,14 @@ export default function HomePage({ navigation }: HomePageProps) {
             mode="flat"
             label="Garden Sq.Ft"
             underlineColorAndroid="transparent"
-            placeholder="0"
+            placeholder="Enter Garden Size"
             keyboardType={"numeric"}
-            value={createSize.toString()}
+            value={createSize ? createSize.toString() : undefined}
             onChangeText={onChangeTextInput}
           />
           <Button
             style={styles.button}
-            icon={() => (
-              <FontAwesome5
-                name={"border-all"}
-                style={{ width: 15, height: 15 }}
-              />
-            )}
+            icon={() => <FontAwesome5 name={"border-all"} style={{ width: 15, height: 15 }} />}
             mode="contained"
             onPress={async () => await generateGardenHandler()}
           >
@@ -219,21 +221,14 @@ export default function HomePage({ navigation }: HomePageProps) {
       </Button>
       <Button
         style={styles.button}
-        icon={() => (
-          <FontAwesome5
-            name={"border-none"}
-            style={{ width: 15, height: 15 }}
-          />
-        )}
+        icon={() => <FontAwesome5 name={"border-none"} style={{ width: 15, height: 15 }} />}
         mode="contained"
         onPress={createGardenModalHandler}
       >
         Start New Garden
       </Button>
       <Button
-        icon={() => (
-          <FontAwesome5 name={"calendar"} style={{ width: 15, height: 15 }} />
-        )}
+        icon={() => <FontAwesome5 name={"calendar"} style={{ width: 15, height: 15 }} />}
         style={styles.button}
         mode="contained"
         onPress={() => {
@@ -243,19 +238,13 @@ export default function HomePage({ navigation }: HomePageProps) {
         Plant Calendars
       </Button>
       <Button
-        icon={() => (
-          <FontAwesome5
-            name={"snowflake"}
-            style={{ width: 15, height: 15 }}
-          />
-        )}
+        icon={() => <FontAwesome5 name={"snowflake"} style={{ width: 15, height: 15 }} />}
         style={styles.button}
         mode="contained"
         onPress={tasksHandler} //Navigate to Weather Page
       >
         Weather
       </Button>
-
     </View>
   );
 }
